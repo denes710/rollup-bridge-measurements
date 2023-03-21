@@ -1,0 +1,27 @@
+{
+  "name": "nft-bridge-contracts",
+  "version": "1.0.0",
+  "description": "Features: - support existing NFT contracts via PegNFT - support new multi-chain native NFT, deploy MCNNFT contract on multiple chains",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celer-network/nft-bridge-contracts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/celer-network/nft-bridge-contracts/issues"
+  },
+  "homepage": "https://github.com/celer-network/nft-bridge-contracts#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@openzeppelin/hardhat-upgrades": "^1.22.1",
+    "hardhat": "^2.13.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.2"
+  }
+}
