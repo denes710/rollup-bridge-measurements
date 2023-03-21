@@ -1,0 +1,22 @@
+{
+  "name": "connext_measurement",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "hardhat": "^2.13.0"
+  },
+  "dependencies": {
+    "@eth-optimism/contracts": "^0.5.40",
+    "@gelatonetwork/relay-context": "^2.1.0",
+    "@openzeppelin/contracts": "^4.8.2",
+    "@openzeppelin/contracts-upgradeable": "^4.8.2",
+    "hardhat-gas-reporter": "^1.0.9"
+  }
+}

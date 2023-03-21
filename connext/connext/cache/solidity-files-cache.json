@@ -1,0 +1,2724 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/HelperOptimismAmb.sol": {
+      "lastModificationDate": 1679328863745,
+      "contentHash": "8ec05b0f9eb287b5820e1f2418f6ccd1",
+      "sourceName": "contracts/HelperOptimismAmb.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./messaging/interfaces/ambs/optimism/OptimismAmb.sol",
+        "./messaging/libraries/MerkleLib.sol",
+        "./messaging/libraries/Message.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "HelperOptimismAmb"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/optimism/OptimismAmb.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "c9275429c0a5d8544799d673725036d7",
+      "sourceName": "contracts/messaging/interfaces/ambs/optimism/OptimismAmb.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "OptimismAmb"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/OptimismSpokeConnector.sol": {
+      "lastModificationDate": 1679320292747,
+      "contentHash": "2c76f2bbfa84c019f56506f1044879e2",
+      "sourceName": "contracts/messaging/connectors/optimism/OptimismSpokeConnector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../interfaces/ambs/optimism/OptimismAmb.sol",
+        "../SpokeConnector.sol",
+        "../Connector.sol",
+        "./BaseOptimism.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "OptimismSpokeConnector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/SpokeConnector.sol": {
+      "lastModificationDate": 1679328917050,
+      "contentHash": "b06ef94ad8465a7824c78aa589d62b7e",
+      "sourceName": "contracts/messaging/connectors/SpokeConnector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+        "@openzeppelin/contracts/utils/Address.sol",
+        "../../shared/libraries/TypedMemView.sol",
+        "../../shared/libraries/ExcessivelySafeCall.sol",
+        "../../shared/libraries/TypeCasts.sol",
+        "../libraries/MerkleLib.sol",
+        "../libraries/Message.sol",
+        "../libraries/RateLimited.sol",
+        "../MerkleTreeManager.sol",
+        "../WatcherClient.sol",
+        "./Connector.sol",
+        "./ConnectorManager.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "SpokeConnector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/Connector.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "1b0e43ddbd47a8bf748579d4ac9bda3d",
+      "sourceName": "contracts/messaging/connectors/Connector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../shared/ProposedOwnable.sol",
+        "../interfaces/IConnector.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "Connector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/BaseOptimism.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "a91c56d7220add07a4d382dc96c852f4",
+      "sourceName": "contracts/messaging/connectors/optimism/BaseOptimism.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../interfaces/ambs/optimism/OptimismAmb.sol",
+        "../GasCap.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "BaseOptimism"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/libraries/TypedMemView.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "e49d9dda069fdf57d2993fb1f38fa0d8",
+      "sourceName": "contracts/shared/libraries/TypedMemView.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "TypedMemView"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/libraries/ExcessivelySafeCall.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "c8b45009c2dcf6fbc7295b0d6e6f3b97",
+      "sourceName": "contracts/shared/libraries/ExcessivelySafeCall.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "ExcessivelySafeCall"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/libraries/TypeCasts.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "e548342c5c29f12b65cae9ffc413ae1c",
+      "sourceName": "contracts/shared/libraries/TypeCasts.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./TypedMemView.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "TypeCasts"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/libraries/MerkleLib.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "4c920d0f24049b4d44ad6e4adc62128b",
+      "sourceName": "contracts/messaging/libraries/MerkleLib.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "MerkleLib"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/libraries/Message.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "5ca6c404c13100dd3ec4b1079fef81de",
+      "sourceName": "contracts/messaging/libraries/Message.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../shared/libraries/TypedMemView.sol",
+        "../../shared/libraries/TypeCasts.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "Message"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/libraries/RateLimited.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "6c58700ecbcf233f009b731d75583910",
+      "sourceName": "contracts/messaging/libraries/RateLimited.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "RateLimited"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/MerkleTreeManager.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "98f2a1a565cd1960f064c7ed3ba1877f",
+      "sourceName": "contracts/messaging/MerkleTreeManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../shared/ProposedOwnableUpgradeable.sol",
+        "./libraries/MerkleLib.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "MerkleTreeManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/WatcherClient.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "e0c380f21d6de6c68f2fac519c009078",
+      "sourceName": "contracts/messaging/WatcherClient.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/security/Pausable.sol",
+        "../shared/ProposedOwnable.sol",
+        "./WatcherManager.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "WatcherClient"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/ConnectorManager.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "9b13dbf87b00f70d26da89bf260298b3",
+      "sourceName": "contracts/messaging/connectors/ConnectorManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IConnectorManager.sol",
+        "../interfaces/IOutbox.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "ConnectorManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+      "lastModificationDate": 1679311978947,
+      "contentHash": "a8e2d1c30042f64ed89c9d4157eb6cb9",
+      "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1679311978931,
+      "contentHash": "f31ad6fc4bbf9c06203987220156a6ba",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.1"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/ProposedOwnableUpgradeable.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "30558f47ba05f11d70bd139161f8c1a7",
+      "sourceName": "contracts/shared/ProposedOwnableUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "./ProposedOwnable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "ProposedOwnableUpgradeable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/ProposedOwnable.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "a271f63ed78484ba7dd5cf1ef8b2b141",
+      "sourceName": "contracts/shared/ProposedOwnable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IProposedOwnable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "ProposedOwnable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
+      "lastModificationDate": 1679311992248,
+      "contentHash": "fc5844e59776a976987884e4d9814c7d",
+      "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/AddressUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.2"
+      ],
+      "artifacts": [
+        "Initializable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/interfaces/IProposedOwnable.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "21078462b84c839018b28db0c27126b4",
+      "sourceName": "contracts/shared/interfaces/IProposedOwnable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IProposedOwnable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol": {
+      "lastModificationDate": 1679311992236,
+      "contentHash": "228f256dbb21393bc9ad02648e222f74",
+      "sourceName": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.1"
+      ],
+      "artifacts": [
+        "AddressUpgradeable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/WatcherManager.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "3262b3221c626f353f10517e275dd3aa",
+      "sourceName": "contracts/messaging/WatcherManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../shared/ProposedOwnable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "WatcherManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
+      "lastModificationDate": 1679311978947,
+      "contentHash": "25c8108f36fdd472bc78d4c4af240c11",
+      "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Pausable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1679311978931,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/IConnector.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "86dc7b3afeb5668decbfc363d2b2bcf3",
+      "sourceName": "contracts/messaging/interfaces/IConnector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../shared/interfaces/IProposedOwnable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IConnector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/IConnectorManager.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "570c670ed0da562c0d98ae470a61ce30",
+      "sourceName": "contracts/messaging/interfaces/IConnectorManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IOutbox.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IConnectorManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/IOutbox.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "c7fa3bc9601523a320cab10039727da4",
+      "sourceName": "contracts/messaging/interfaces/IOutbox.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IOutbox"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/GasCap.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "56874bb8cb8bf27338554ec36e12e088",
+      "sourceName": "contracts/messaging/connectors/GasCap.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../shared/ProposedOwnable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "GasCap"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/OptimismHubConnector.sol": {
+      "lastModificationDate": 1679324257471,
+      "contentHash": "0a869fc7f05c92b646fd9cf2fd88fd9b",
+      "sourceName": "contracts/messaging/connectors/optimism/OptimismHubConnector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../interfaces/IRootManager.sol",
+        "../../interfaces/ambs/optimism/OptimismAmb.sol",
+        "../../interfaces/ambs/optimism/IStateCommitmentChain.sol",
+        "../../../shared/libraries/TypedMemView.sol",
+        "../HubConnector.sol",
+        "../Connector.sol",
+        "./lib/PredeployAddresses.sol",
+        "./lib/OVMCodec.sol",
+        "./lib/SecureMerkleTrie.sol",
+        "./BaseOptimism.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "OptimismHubConnector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/IRootManager.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "1557f75414b203d81df696111acd7171",
+      "sourceName": "contracts/messaging/interfaces/IRootManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IRootManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/optimism/IStateCommitmentChain.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "f2df1d83318dc91b05c990e03ccbf555",
+      "sourceName": "contracts/messaging/interfaces/ambs/optimism/IStateCommitmentChain.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IStateCommitmentChain"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/HubConnector.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "ba799a2a8cd7edab56ae3101953283ff",
+      "sourceName": "contracts/messaging/connectors/HubConnector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Connector.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "HubConnector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/lib/PredeployAddresses.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "6ced927cc2a8bcbf62fcf3518f85e0e8",
+      "sourceName": "contracts/messaging/connectors/optimism/lib/PredeployAddresses.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "PredeployAddresses"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/lib/OVMCodec.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "9963846453543b545d1a37a2bbb5f35c",
+      "sourceName": "contracts/messaging/connectors/optimism/lib/OVMCodec.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./RLPReader.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "OVMCodec"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/lib/SecureMerkleTrie.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "4cc100a0006ed12771c1b5ba8bf06778",
+      "sourceName": "contracts/messaging/connectors/optimism/lib/SecureMerkleTrie.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./MerkleTrie.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "SecureMerkleTrie"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/lib/RLPReader.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "6f2f80f0069f528d1000f27fe6b0e4ac",
+      "sourceName": "contracts/messaging/connectors/optimism/lib/RLPReader.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "RLPReader"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/lib/MerkleTrie.sol": {
+      "lastModificationDate": 1679324082465,
+      "contentHash": "72fcdc0ce7b40a7288816dd68c5ef96c",
+      "sourceName": "contracts/messaging/connectors/optimism/lib/MerkleTrie.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./BytesUtils.sol",
+        "./RLPReader.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "MerkleTrie"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/connectors/optimism/lib/BytesUtils.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "75d5506b1a5f3af8db569ce8daf0802b",
+      "sourceName": "contracts/messaging/connectors/optimism/lib/BytesUtils.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "BytesUtils"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/upgrade/UpgradeBeaconProxy.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "a4be93a8487c0f57255846f78a8e986f",
+      "sourceName": "contracts/shared/upgrade/UpgradeBeaconProxy.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "UpgradeBeaconProxy"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/upgrade/UpgradeBeaconController.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "c1309a36894b4a580f3c40bb0a727913",
+      "sourceName": "contracts/shared/upgrade/UpgradeBeaconController.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../ProposedOwnable.sol",
+        "./UpgradeBeacon.sol",
+        "@openzeppelin/contracts/utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "UpgradeBeaconController"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/upgrade/UpgradeBeacon.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "e8383b30920923f288986f43f18f76c0",
+      "sourceName": "contracts/shared/upgrade/UpgradeBeacon.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "UpgradeBeacon"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/RootManager.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "d9dddf3095f4b3dcb643bcf43bc947fc",
+      "sourceName": "contracts/messaging/RootManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../shared/ProposedOwnable.sol",
+        "./interfaces/IRootManager.sol",
+        "./interfaces/IHubConnector.sol",
+        "./libraries/Queue.sol",
+        "./libraries/DomainIndexer.sol",
+        "./MerkleTreeManager.sol",
+        "./WatcherClient.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "RootManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/libraries/Queue.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "5fe6c4dd68ccd7fdd161b6d3c11a7b5d",
+      "sourceName": "contracts/messaging/libraries/Queue.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "QueueLib"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/IHubConnector.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "9ce6f56e700d7aec818de577ef49a8e8",
+      "sourceName": "contracts/messaging/interfaces/IHubConnector.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IConnector.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IHubConnector"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/libraries/DomainIndexer.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "4239e69862b725aed9f48d01f6067d06",
+      "sourceName": "contracts/messaging/libraries/DomainIndexer.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "DomainIndexer"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1679311978947,
+      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/resolver/Lib_AddressManager.sol": {
+      "lastModificationDate": 1679318214770,
+      "contentHash": "684734f3098d69ba634f53ab58eaf4af",
+      "sourceName": "@eth-optimism/contracts/libraries/resolver/Lib_AddressManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_AddressManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/resolver/Lib_AddressResolver.sol": {
+      "lastModificationDate": 1679318214770,
+      "contentHash": "34d1331425790d550286884af1599cff",
+      "sourceName": "@eth-optimism/contracts/libraries/resolver/Lib_AddressResolver.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Lib_AddressManager.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_AddressResolver"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/L1/rollup/StateCommitmentChain.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "7936cb9d5be12d5d1812974d3ae67abe",
+      "sourceName": "@eth-optimism/contracts/L1/rollup/StateCommitmentChain.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/codec/Lib_OVMCodec.sol",
+        "../../libraries/resolver/Lib_AddressResolver.sol",
+        "../../libraries/utils/Lib_MerkleTree.sol",
+        "./IStateCommitmentChain.sol",
+        "./ICanonicalTransactionChain.sol",
+        "../verification/IBondManager.sol",
+        "./IChainStorageContainer.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "StateCommitmentChain"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/codec/Lib_OVMCodec.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "6e2de6f520efb187c5e01c485675dba8",
+      "sourceName": "@eth-optimism/contracts/libraries/codec/Lib_OVMCodec.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../rlp/Lib_RLPReader.sol",
+        "../rlp/Lib_RLPWriter.sol",
+        "../utils/Lib_BytesUtils.sol",
+        "../utils/Lib_Bytes32Utils.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_OVMCodec"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/utils/Lib_MerkleTree.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "b671cbe24ef8f6422fae78d305417889",
+      "sourceName": "@eth-optimism/contracts/libraries/utils/Lib_MerkleTree.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_MerkleTree"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/L1/verification/IBondManager.sol": {
+      "lastModificationDate": 1679318214766,
+      "contentHash": "2e479e4d8a0dceb2f07e90ac077965e2",
+      "sourceName": "@eth-optimism/contracts/L1/verification/IBondManager.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IBondManager"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/L1/rollup/IStateCommitmentChain.sol": {
+      "lastModificationDate": 1679318214770,
+      "contentHash": "f1641ee4161bb59a0d98cc22bc6d943f",
+      "sourceName": "@eth-optimism/contracts/L1/rollup/IStateCommitmentChain.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/codec/Lib_OVMCodec.sol"
+      ],
+      "versionPragmas": [
+        ">0.5.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IStateCommitmentChain"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/L1/rollup/ICanonicalTransactionChain.sol": {
+      "lastModificationDate": 1679318214766,
+      "contentHash": "7e4b90095962a399dc41c11860440180",
+      "sourceName": "@eth-optimism/contracts/L1/rollup/ICanonicalTransactionChain.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/codec/Lib_OVMCodec.sol",
+        "./IChainStorageContainer.sol"
+      ],
+      "versionPragmas": [
+        ">0.5.0 <0.9.0"
+      ],
+      "artifacts": [
+        "ICanonicalTransactionChain"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/L1/rollup/IChainStorageContainer.sol": {
+      "lastModificationDate": 1679318214766,
+      "contentHash": "df41f85a23f3e783857d81c90c1a7e4a",
+      "sourceName": "@eth-optimism/contracts/L1/rollup/IChainStorageContainer.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">0.5.0 <0.9.0"
+      ],
+      "artifacts": [
+        "IChainStorageContainer"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/rlp/Lib_RLPReader.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "da043486f683fccce3edacfd5f84d98d",
+      "sourceName": "@eth-optimism/contracts/libraries/rlp/Lib_RLPReader.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_RLPReader"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/rlp/Lib_RLPWriter.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "53fff0651143b7a21aa3b90373eace72",
+      "sourceName": "@eth-optimism/contracts/libraries/rlp/Lib_RLPWriter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_RLPWriter"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/utils/Lib_BytesUtils.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "1ebfdb02780beca3c418a3465c33dab1",
+      "sourceName": "@eth-optimism/contracts/libraries/utils/Lib_BytesUtils.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_BytesUtils"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/utils/Lib_Bytes32Utils.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "d7f2a52fc5fed34eca6431d9b530995f",
+      "sourceName": "@eth-optimism/contracts/libraries/utils/Lib_Bytes32Utils.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_Bytes32Utils"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/HelperStateCommitmentChain.sol": {
+      "lastModificationDate": 1679322494089,
+      "contentHash": "78349c073a0740cffe9039fb24582009",
+      "sourceName": "contracts/HelperStateCommitmentChain.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@eth-optimism/contracts/L1/rollup/StateCommitmentChain.sol"
+      ],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "HelperStateCommitmentChain"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/IMessageRecipient.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "086a8a31c10f77b71f9967d9a6bb900e",
+      "sourceName": "contracts/messaging/interfaces/IMessageRecipient.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IMessageRecipient"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/ConsensysAmb.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "87efd2aa185dce4f48e0875243efd4b3",
+      "sourceName": "contracts/messaging/interfaces/ambs/ConsensysAmb.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.15"
+      ],
+      "artifacts": [
+        "ConsensysAmb"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/GnosisAmb.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "feddd55514232583818bbeb3c9351f3e",
+      "sourceName": "contracts/messaging/interfaces/ambs/GnosisAmb.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "GnosisAmb"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/Multichain.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "5471f09d55000096c139dc4f42c8fab9",
+      "sourceName": "contracts/messaging/interfaces/ambs/Multichain.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "Multichain"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/arbitrum/ArbitrumL2Amb.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "85181ccb023c11dc7013dc935a6c0dff",
+      "sourceName": "contracts/messaging/interfaces/ambs/arbitrum/ArbitrumL2Amb.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "ArbitrumL2Amb"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/arbitrum/IArbitrumInbox.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "1b3c46a9cf034df06fcd5b36006fff2d",
+      "sourceName": "contracts/messaging/interfaces/ambs/arbitrum/IArbitrumInbox.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IArbitrumInbox"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/arbitrum/IArbitrumOutbox.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "47c5b86bf46967fb4ca28b856fbe5737",
+      "sourceName": "contracts/messaging/interfaces/ambs/arbitrum/IArbitrumOutbox.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IArbitrumOutbox"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/arbitrum/IArbitrumRollup.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "71a4201d6f6368d578fac68cb68555c5",
+      "sourceName": "contracts/messaging/interfaces/ambs/arbitrum/IArbitrumRollup.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IArbitrumRollup"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/zksync/IL1Messenger.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "bfadf512c9631e746abf029eb052f114",
+      "sourceName": "contracts/messaging/interfaces/ambs/zksync/IL1Messenger.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IL1Messenger"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/messaging/interfaces/ambs/zksync/IZkSync.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "51902e0ad3ea59aa59e47afa7ca259c3",
+      "sourceName": "contracts/messaging/interfaces/ambs/zksync/IZkSync.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.17"
+      ],
+      "artifacts": [
+        "IZkSync"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/shared/libraries/Multisend.sol": {
+      "lastModificationDate": 1679311647263,
+      "contentHash": "e7ee12e5db37c17ccaaf98b4e93ab71a",
+      "sourceName": "contracts/shared/libraries/Multisend.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "MultiSend"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/node_modules/@eth-optimism/contracts/libraries/utils/Lib_Buffer.sol": {
+      "lastModificationDate": 1679318214774,
+      "contentHash": "a5d1be6a7cf6f7892055a6e847cfc600",
+      "sourceName": "@eth-optimism/contracts/libraries/utils/Lib_Buffer.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "Lib_Buffer"
+      ]
+    },
+    "/home/denes710/Desktop/degree_work/connext_plus_nft/connext_measurement/contracts/HelperChainStorageContainer.sol": {
+      "lastModificationDate": 1679323750779,
+      "contentHash": "530202b56f596c64207804347f0e203c",
+      "sourceName": "contracts/HelperChainStorageContainer.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@eth-optimism/contracts/libraries/utils/Lib_Buffer.sol",
+        "@eth-optimism/contracts/libraries/resolver/Lib_AddressResolver.sol",
+        "@eth-optimism/contracts/libraries/codec/Lib_OVMCodec.sol",
+        "@eth-optimism/contracts/L1/rollup/IChainStorageContainer.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "HelperChainStorageContainer"
+      ]
+    }
+  }
+}
