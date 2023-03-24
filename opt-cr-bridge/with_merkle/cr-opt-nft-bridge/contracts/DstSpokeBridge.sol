@@ -33,7 +33,7 @@ abstract contract DstSpokeBridge is SpokeBridge {
         uint256 _incomingBlockId,
         LibLocalTransaction.LocalTransaction calldata _transaction,
         bytes32[] calldata _proof,
-        uint _index
+        uint256 _index
     ) public {
         require(_verifyMerkleProof(_proof, incomingBlocks[_incomingBlockId].transactionRoot, _transaction, _index),
             "DstSpokeBridge: proof is not correct unwrapping!");
@@ -44,15 +44,24 @@ abstract contract DstSpokeBridge is SpokeBridge {
 
         IWrappedERC721(_transaction.remoteErc721Contract).burn(_transaction.tokenId);
 
-        localBlocks[localBlockId.current()].transactions.push(LibLocalTransaction.LocalTransaction({
-            tokenId:_transaction.tokenId,
-            maker:_msgSender(),
-            receiver:_newReceiver,
-            localErc721Contract:_transaction.localErc721Contract, // it is not used / maybe?
-            remoteErc721Contract:_transaction.remoteErc721Contract
-        }));
+        uint256 currentTxId = localBlocks[localBlockId.current()].length.current();
 
-        if (localBlocks[localBlockId.current()].transactions.length == TRANS_PER_BLOCK) {
+        localBlocks[localBlockId.current()].transactions[currentTxId] = 
+            keccak256(abi.encode(_transaction.tokenId, _msgSender(), _newReceiver, _transaction.localErc721Contract, _transaction.remoteErc721Contract));
+
+        localBlocks[localBlockId.current()].length.increment();
+
+        emit NewTransactionAddedToBlock(
+            localBlockId.current(),
+            currentTxId,
+            _transaction.tokenId,
+            _msgSender(),
+            _newReceiver,
+            _transaction.localErc721Contract,
+            _transaction.remoteErc721Contract
+        );
+
+        if (currentTxId + 1 == TRANS_PER_BLOCK) {
             localBlockId.increment();
         }
     }
@@ -89,6 +98,8 @@ abstract contract DstSpokeBridge is SpokeBridge {
         }
 
         IWrappedERC721(_transaction.remoteErc721Contract).mint(_transaction.receiver, _transaction.tokenId);
+
+        emit NFTClaimed(_incomingBlockId, _transaction.remoteErc721Contract, _transaction.receiver,  _transaction.tokenId);
     }
 
     function _isMinted(address _contract, uint256 _tokenId) internal view returns (address) {

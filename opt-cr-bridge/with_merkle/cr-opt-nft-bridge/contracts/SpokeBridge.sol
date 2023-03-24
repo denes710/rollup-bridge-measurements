@@ -16,10 +16,6 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
     using Counters for Counters.Counter;
     using LibLocalTransaction for LibLocalTransaction.LocalTransaction;
 
-    struct LocalBlock {
-        LibLocalTransaction.LocalTransaction[] transactions;
-    }
-
     enum IncomingBlockStatus {
         None,
         Relayed,
@@ -83,7 +79,7 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
     mapping(address => Relayer) public relayers;
 
     // local block
-    mapping(uint256 => LocalBlock) internal localBlocks;
+    mapping(uint256 => LibLocalTransaction.LocalBlock) internal localBlocks;
     Counters.Counter public localBlockId;
 
     // incoming block
@@ -152,15 +148,16 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
     function sendProof(uint256 _height) public override {
         // we can send a calculated merkle proof about localBlocks, it is always a trusted event
         bytes32 calculatedRoot = _height < localBlockId.current() ?
-            bytes32(0) : _getMerkleRoot(localBlocks[_height].transactions);
+            bytes32(0) : _getMerkleRoot(_height);
         bytes memory data = abi.encode(_height, calculatedRoot);
         _sendMessage(data);
+        emit ProofSent(_height);
     }
 
     function receiveProof(bytes memory _root) public override onlyHub {
         require(status != BridgeStatus.Active, "SpokeBridge: bride status is active!");
 
-        (uint256 height, bytes32 calculatedRoot) = abi.decode(_root, (uint256, bytes32));
+        (uint32 height, bytes32 calculatedRoot) = abi.decode(_root, (uint32, bytes32));
 
         IncomingBlock storage incomingBlock = incomingBlocks[height];
 
@@ -188,6 +185,8 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
                 // nobody found malicious action
                 status = BridgeStatus.Active;
             }
+
+            emit ProofReceived(height, false);
         } else {
             // True challenging, proved malicious action
             incomingBlock.status = IncomingBlockStatus.Malicious;
@@ -210,6 +209,8 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
                 incomingChallengeRewards[_msgSender()].isClaimed = false;
             }
             challengedIncomingBlocks[height].status = ChallengeStatus.Proved;
+
+            emit ProofReceived(height, true);
         }
     }
 
@@ -257,6 +258,8 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
         });
 
         incomingBlockId++;
+
+        emit IncomingBlockAdded(_transactionRoot, incomingBlockId - 1);
     }
 
     function challengeIncomingBlock(uint256 _height) public override payable {
@@ -280,6 +283,8 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
 
         relayers[incomingBlocks[_height].relayer].againstChallenges.increment();
         relayers[incomingBlocks[_height].relayer].status = RelayerStatus.Challenged;
+
+        emit IncomingBlockChallenged(incomingBlocks[_height].transactionRoot, _height);
     }
 
     function restore() public override onlyInPausedStatus {
@@ -291,19 +296,16 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
         }
 
         // set the next incoming block id
-        if (firstMaliciousBlockHeight != 0) {
-            incomingBlockId = firstMaliciousBlockHeight - 1;
-        } else {
-            incomingBlockId = 0;
-        }
+        incomingBlockId = firstMaliciousBlockHeight;
 
         firstMaliciousBlockHeight = 0;
+        emit Restored(incomingBlockId);
     }
 
     function getLocalTransaction(
         uint256 _blockNum,
         uint256 _txIdx
-    ) public view override returns (LibLocalTransaction.LocalTransaction memory) {
+    ) public view override returns (bytes32) {
         return localBlocks[_blockNum].transactions[_txIdx];
     }
 
@@ -318,29 +320,24 @@ abstract contract SpokeBridge is ISpokeBridge, Ownable {
 
     function _getCrossMessageSender() internal virtual returns (address);
 
-    function _getMerkleRoot(LibLocalTransaction.LocalTransaction[] memory _transactions) internal view returns (bytes32) {
-        bytes32[] memory hashes = new bytes32[](_transactions.length);
+    function _getMerkleRoot(uint256 _height) internal view returns (bytes32) {
+        uint size = localBlocks[_height].length.current();
+
+        bytes32[] memory hashes = new bytes32[](size);
 
         uint32 idx = 0;
-        for (uint i = 0; i < _transactions.length; i++) {
-            hashes[idx++] = keccak256(abi.encode(
-                _transactions[i].tokenId,
-                _transactions[i].maker,
-                _transactions[i].receiver,
-                _transactions[i].localErc721Contract,
-                _transactions[i].remoteErc721Contract
-            ));
+        for (uint i = 0; i < size; i++) {
+            hashes[idx++] = localBlocks[_height].transactions[i];
         }
 
-        uint n = _transactions.length;
         uint offset = 0;
 
-        while (n > 0) {
-            for (uint i = 0; i < n - 1; i += 2) {
+        while (size > 0) {
+            for (uint i = 0; i < size - 1; i += 2) {
                 hashes[idx++] = keccak256(abi.encodePacked(hashes[offset + i], hashes[offset + i + 1]));
             }
-            offset += n;
-            n = n / 2;
+            offset += size;
+            size = size / 2;
         }
 
         return hashes[hashes.length - 1];
