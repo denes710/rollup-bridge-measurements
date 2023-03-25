@@ -2,3 +2,5 @@ optimism-native-bridge/artifacts/
 optimism-native-bridge/cache/
 opt-cr-bridge/with_merkle/cr-opt-nft-bridge/artifacts/
 opt-cr-bridge/with_merkle/cr-opt-nft-bridge/cache/
+opt-cr-bridge/with_bids/cr-opt-nft-bridge/artifacts/
+opt-cr-bridge/with_bids/cr-opt-nft-bridge/cache/
