@@ -44,6 +44,7 @@ describe("Tests for gas measurements", function () {
 
     // wrapping
     await l1Bridge.connect(user).bridgeERC721To(localERC721.address, remoteERC721.address, remoteOwner.address, 1, 10000, []);
+
     await l2Bridge.connect(minimalMessengerSigner).finalizeBridgeERC721(remoteERC721.address, localERC721.address, user.address, remoteOwner.address, 1, []);
 
     // unwrapping
