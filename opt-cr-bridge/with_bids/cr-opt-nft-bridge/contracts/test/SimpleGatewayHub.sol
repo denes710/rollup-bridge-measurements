@@ -12,7 +12,7 @@ contract SimpleGatewayHub is IHub, Ownable {
     function processMessage(bytes memory _data) public override {
         require(bridgeToBrdige[_msgSender()] != address(0), "Hub: contract has no pair!");
 
-        ISpokeBridge(bridgeToBrdige[_msgSender()]).receiveProof(_data);
+        // ISpokeBridge(bridgeToBrdige[_msgSender()]).receiveProof(_data);
     }
 
     function addSpokeBridge(address _srcContract, address _dstContract) public override onlyOwner {
@@ -26,12 +26,10 @@ contract SimpleGatewayHub is IHub, Ownable {
     function getMessage(bool _isOutgoingBid) public view returns (bytes memory) {
         if (_isOutgoingBid) {
             bytes memory data = abi.encode(
-                1,
-                1,
-                address(0),
-                1,
-                address(0),
-                address(0)
+                2,
+                bytes32(""),
+                address(this),
+                2
             );
 
             data = abi.encode(data, true);
@@ -39,13 +37,11 @@ contract SimpleGatewayHub is IHub, Ownable {
         } else {
 
             bytes memory data = abi.encode(
-                1,
                 2,
-                address(0),
+                bytes32(""),
+                address(this),
                 2,
-                address(0),
-                address(0),
-                address(0)
+                address(this)
             );
 
             data = abi.encode(data, false);
