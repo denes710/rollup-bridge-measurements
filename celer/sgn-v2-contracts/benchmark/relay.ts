@@ -33,6 +33,10 @@ describe('Relay Gas Benchmark', function () {
   let token: TestERC20;
   let admin: Wallet;
   let accounts: Wallet[];
+  let busReceiver;
+  let msgExampleBasic;
+
+  const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
   beforeEach(async () => {
     const res = await loadFixture(fixture);
@@ -44,6 +48,12 @@ describe('Relay Gas Benchmark', function () {
     await bridge.setEpochVolumeCaps([token.address], [parseUnits('100')]);
     await bridge.setEpochLength(5);
     await bridge.setDelayThresholds([token.address], [parseUnits('100')])
+
+    const BusReceiverFactory = await ethers.getContractFactory("MessageBusReceiver");
+    busReceiver = await BusReceiverFactory.deploy(bridge.address, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS);
+
+    const MsgExampleBasicFactory = await ethers.getContractFactory("MsgExampleBasic");
+    msgExampleBasic = await MsgExampleBasicFactory.deploy(busReceiver.address);
   });
 
   it('benchmark relay gas cost for bridge', async function () {
@@ -132,7 +142,16 @@ describe('Relay Gas Benchmark', function () {
       signers,
       bridge.address
     );
-    const gasUsed = (await (await bridge.relay(relayBytes, sigs, addrs, powers)).wait()).gasUsed;
+
+    const route = {
+      sender: msgExampleBasic.address,
+      senderBytes: [],
+      receiver: msgExampleBasic.address,
+      srcChainId: 420,
+      srcTxHash: "0x1111111111111111111111111111111111111111111111111111111111111111"
+    };
+
+    const gasUsed = (await (await busReceiver.functions['executeMessage(bytes,(address,bytes,address,uint64,bytes32),bytes[],address[],uint256[],string)'](relayBytes, route, sigs, addrs, powers, "Relay")).wait()).gasUsed;
     fs.appendFileSync(GAS_USAGE_LOG, signerNum.toString() + '\t' + quorumSigNum.toString() + '\t' + gasUsed + '\n');
     return gasUsed;
   }

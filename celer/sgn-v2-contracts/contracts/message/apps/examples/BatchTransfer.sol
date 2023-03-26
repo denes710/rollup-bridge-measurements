@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-pragma solidity 0.8.17;
+pragma solidity 0.8.9;
 
 import "../../framework/MessageApp.sol";
 
@@ -43,10 +43,8 @@ contract BatchTransfer is MessageApp {
         _;
     }
 
-    // called by sender on source chain to send tokens to a list of
-    // <_accounts, _amounts> on the destination chain
     function batchTransfer(
-        address _dstContract, // BatchTransfer contract address at the dst chain
+        address _receiver,
         address _token,
         uint256 _amount,
         uint64 _dstChainId,
@@ -64,16 +62,16 @@ contract BatchTransfer is MessageApp {
         // require(minRecv > totalAmt, "invalid maxSlippage");
         nonce += 1;
         status[nonce] = BatchTransferStatus({
-            h: keccak256(abi.encodePacked(_dstContract, _dstChainId)),
+            h: keccak256(abi.encodePacked(_receiver, _dstChainId)),
             status: TransferStatus.Null
         });
         IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
         bytes memory message = abi.encode(
             TransferRequest({nonce: nonce, accounts: _accounts, amounts: _amounts, sender: msg.sender})
         );
-        // send token and message to the destination chain
+        // MsgSenderApp util function
         sendMessageWithTransfer(
-            _dstContract,
+            _receiver,
             _token,
             _amount,
             _dstChainId,
@@ -85,8 +83,7 @@ contract BatchTransfer is MessageApp {
         );
     }
 
-    // called by MessageBus on source chain to handle message with token transfer failures (e.g., due to bad slippage).
-    // the associated token transfer is guaranteed to have already been refunded
+    // called on source chain for handling of bridge failures (bad liquidity, bad slippage, etc...)
     function executeMessageWithTransferRefund(
         address _token,
         uint256 _amount,
@@ -98,7 +95,7 @@ contract BatchTransfer is MessageApp {
         return ExecutionStatus.Success;
     }
 
-    // called by MessageBus on source chain to receive receipts
+    // receive receipts
     function executeMessage(
         address _sender,
         uint64 _srcChainId,
@@ -113,11 +110,9 @@ contract BatchTransfer is MessageApp {
 
     // ============== functions on destination chain ==============
 
-    // called by MessageBus on destination chain to handle batchTransfer message by
-    // distributing tokens to receivers and sending receipt.
-    // the lump sum token transfer associated with the message is guaranteed to have already been received.
+    // handle batchTransfer message, distribute tokens and send receipt
     function executeMessageWithTransfer(
-        address _srcContract,
+        address _sender,
         address _token,
         uint256 _amount,
         uint64 _srcChainId,
@@ -136,14 +131,14 @@ contract BatchTransfer is MessageApp {
             IERC20(_token).safeTransfer(transfer.sender, remainder);
         }
         bytes memory message = abi.encode(TransferReceipt({nonce: transfer.nonce, status: TransferStatus.Success}));
-        // send receipt back to the source chain contract
-        sendMessage(_srcContract, _srcChainId, message, msg.value);
+        // MsgSenderApp util function
+        sendMessage(_sender, _srcChainId, message, msg.value);
         return ExecutionStatus.Success;
     }
 
-    // called by MessageBus if handleMessageWithTransfer above got reverted
+    // called only if handleMessageWithTransfer above was reverted
     function executeMessageWithTransferFallback(
-        address _srcContract,
+        address _sender,
         address _token,
         uint256 _amount,
         uint64 _srcChainId,
@@ -153,8 +148,7 @@ contract BatchTransfer is MessageApp {
         TransferRequest memory transfer = abi.decode((_message), (TransferRequest));
         IERC20(_token).safeTransfer(transfer.sender, _amount);
         bytes memory message = abi.encode(TransferReceipt({nonce: transfer.nonce, status: TransferStatus.Fail}));
-        // send receipt back to the source chain contract
-        sendMessage(_srcContract, _srcChainId, message, msg.value);
+        sendMessage(_sender, _srcChainId, message, msg.value);
         return ExecutionStatus.Success;
     }
 }

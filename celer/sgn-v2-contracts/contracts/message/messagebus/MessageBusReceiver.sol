@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-pragma solidity >=0.8.9;
+pragma solidity 0.8.9;
 
 import "../libraries/MsgDataTypes.sol";
 import "../interfaces/IMessageReceiverApp.sol";
@@ -10,7 +10,6 @@ import "../../interfaces/IOriginalTokenVaultV2.sol";
 import "../../interfaces/IPeggedTokenBridge.sol";
 import "../../interfaces/IPeggedTokenBridgeV2.sol";
 import "../../safeguard/Ownable.sol";
-import "../../libraries/Utils.sol";
 
 contract MessageBusReceiver is Ownable {
     mapping(bytes32 => MsgDataTypes.TxStatus) public executedMessages;
@@ -215,15 +214,15 @@ contract MessageBusReceiver is Ownable {
         address[] calldata _signers,
         uint256[] calldata _powers,
         string memory domainName
-    ) private {
+    ) public {
         // For message without associated token transfer, message Id is computed through message info,
         // in order to guarantee that each message can only be applied once
         bytes32 messageId = computeMessageOnlyId(_route, _message);
         require(executedMessages[messageId] == MsgDataTypes.TxStatus.Null, "message already executed");
         executedMessages[messageId] = MsgDataTypes.TxStatus.Pending;
 
-        bytes32 domain = keccak256(abi.encodePacked(block.chainid, address(this), domainName));
-        IBridge(liquidityBridge).verifySigs(abi.encodePacked(domain, messageId), _sigs, _signers, _powers);
+        bytes32 domain = keccak256(abi.encodePacked(block.chainid, liquidityBridge, domainName));
+        IBridge(liquidityBridge).verifySigs(abi.encodePacked(domain, _message), _sigs, _signers, _powers);
         MsgDataTypes.TxStatus status;
         IMessageReceiverApp.ExecutionStatus est = executeMessage(_route, _message);
         if (est == IMessageReceiverApp.ExecutionStatus.Success) {
@@ -487,24 +486,19 @@ contract MessageBusReceiver is Ownable {
                 invalid()
             }
         }
-        string memory revertMsg = Utils.getRevertMsg(_returnData);
-        // revert the execution if the revert message has the ABORT prefix
-        checkAbortPrefix(revertMsg);
-        // otherwiase, emit revert message, return and mark the execution as failed (non-retryable)
-        emit CallReverted(revertMsg);
+        emit CallReverted(getRevertMsg(_returnData));
     }
 
-    function checkAbortPrefix(string memory _revertMsg) private pure {
-        bytes memory prefixBytes = bytes(MsgDataTypes.ABORT_PREFIX);
-        bytes memory msgBytes = bytes(_revertMsg);
-        if (msgBytes.length >= prefixBytes.length) {
-            for (uint256 i = 0; i < prefixBytes.length; i++) {
-                if (msgBytes[i] != prefixBytes[i]) {
-                    return; // prefix not match, return
-                }
-            }
-            revert(_revertMsg); // prefix match, revert
+    // https://ethereum.stackexchange.com/a/83577
+    // https://github.com/Uniswap/v3-periphery/blob/v1.0.0/contracts/base/Multicall.sol
+    function getRevertMsg(bytes memory _returnData) private pure returns (string memory) {
+        // If the _res length is less than 68, then the transaction failed silently (without a revert message)
+        if (_returnData.length < 68) return "Transaction reverted silently";
+        assembly {
+            // Slice the sighash.
+            _returnData := add(_returnData, 0x04)
         }
+        return abi.decode(_returnData, (string)); // All that remains is the revert string
     }
 
     function getRouteInfo(MsgDataTypes.RouteInfo calldata _route) private pure returns (MsgDataTypes.Route memory) {
