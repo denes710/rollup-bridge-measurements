@@ -24,6 +24,27 @@ contract MerkleProofHelper  {
         }
     }
 
+    function getProof(LibLocalTransaction.LocalTransaction calldata _transaction, uint256 _height) public view returns (bytes32, bytes32[] memory) {
+        bytes32 randomHash = keccak256(abi.encode(
+            _transaction.tokenId,
+            _transaction.maker,
+            _transaction.receiver,
+            _transaction.localErc721Contract,
+            _transaction.remoteErc721Contract
+        ));
+
+        bytes32 root = randomHash;
+        bytes32[] memory proofs = new bytes32[](_height);
+
+
+        for (uint i = 0; i < _height; i++) {
+            root = keccak256(abi.encodePacked(root, randomHash));
+            proofs[i] = randomHash;
+        }
+
+        return (root, proofs);
+    }
+
     function getRoot() public view returns (bytes32) {
         return hashes[hashes.length - 1];
     }

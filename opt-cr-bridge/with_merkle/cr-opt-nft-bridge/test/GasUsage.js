@@ -1,6 +1,25 @@
 const { time, setBalance } = require("@nomicfoundation/hardhat-network-helpers");
+const { serialize } = require("@ethersproject/transactions");
 
 describe("Tests for gas measurements", function () {
+    const NON_ZERO_BYTE_ADDR = "0x1111111111111111111111111111111111111111";
+    const NON_ZERO_BYTE_UINT256 = "0x1111111111111111111111111111111111111111111111111111111111111111";
+    const NON_ZERO_BYTE_UINT32 = "0x11111111";
+    const NON_NULL_BYTES32 = '0x1111111111111111111111111111111111111111111111111111111111111111';
+
+    async function getL1EstimatedGasCost(rawTx, user) {
+      rawTx = await user.populateTransaction(rawTx);
+      let bytes = serialize({
+        data: rawTx.data,
+        to: rawTx.to,
+        gasPrice: rawTx.gasPrice,
+        type: rawTx.type,
+        gasLimit: rawTx.gasLimit,
+        nonce: 0xffffffff,
+      });
+  
+      return bytes;
+    }
     it("Wrapping cycle", async function () {
         const [owner, user, remoteUser, relayer] = await ethers.getSigners();
 
@@ -76,6 +95,56 @@ describe("Tests for gas measurements", function () {
     
         const proof_4_dest = [simpleGatewayDstSpokeBrdige.hashes(2), simpleGatewayDstSpokeBrdige.hashes(4)];
         await simpleGatewaySrcSpokeBrdige.connect(user).claimNFT(0, [4, remoteUser.address, user.address, localERC721.address, wrappedERC721.address], proof_4_dest, 3);
+
+        const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+        const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
+
+        // L1 gas estimation for L2 functions
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log("L1 gas estimation for L2 functions");
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        let rawTx = await simpleGatewaySrcSpokeBrdige.connect(user).populateTransaction.addNewTransactionToBlock(NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR);
+        let bytes = await getL1EstimatedGasCost(rawTx, user);
+        let estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewaySrcSpokeBrdige.addNewTransactionToBlock L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(relayer).populateTransaction.addIncomingBlock(NON_NULL_BYTES32);
+        bytes = await getL1EstimatedGasCost(rawTx, relayer);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewayDstSpokeBrdige.addIncomingBlock L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(remoteUser).populateTransaction.claimNFT(NON_ZERO_BYTE_UINT256, [NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR], proof_1, NON_ZERO_BYTE_UINT256, {value: ethers.utils.parseEther("0.00")});
+        bytes = await getL1EstimatedGasCost(rawTx, remoteUser);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewayDstSpokeBrdige.claimNFT L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(remoteUser).populateTransaction.addNewTransactionToBlock(NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT256, [NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR], proof_1, NON_ZERO_BYTE_UINT256);
+        bytes = await getL1EstimatedGasCost(rawTx, remoteUser);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewayDstSpokeBrdige.addNewTransactionToBlock L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewaySrcSpokeBrdige.connect(relayer).populateTransaction.addIncomingBlock(NON_NULL_BYTES32);
+        bytes = await getL1EstimatedGasCost(rawTx, relayer);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewaySrcSpokeBrdige.addIncomingBlock L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(user).populateTransaction.claimNFT(NON_ZERO_BYTE_UINT256, [NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR], proof_1, NON_ZERO_BYTE_UINT256, {value: ethers.utils.parseEther("0.00")});
+        bytes = await getL1EstimatedGasCost(rawTx, user);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewayDstSpokeBrdige.claimNFT L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     });
     it("Challenging cycle", async function () {
         const [owner, user, remoteUser, relayer, wathcer] = await ethers.getSigners();
@@ -129,5 +198,109 @@ describe("Tests for gas measurements", function () {
 
         const message = await simpleGatewayHub.getMessage(1, transactionRoot);
         await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).receiveProof(message);
+
+        const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+        const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
+
+        // L1 gas estimation for L2 functions
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log("L1 gas estimation for L2 functions");
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        let rawTx = await simpleGatewayDstSpokeBrdige.connect(wathcer).populateTransaction.challengeIncomingBlock(NON_ZERO_BYTE_UINT256, {value: ethers.utils.parseEther("10.0")});
+        let bytes = await getL1EstimatedGasCost(rawTx, wathcer);
+        let estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> challengeIncomingBlock L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        
+        rawTx = await simpleGatewaySrcSpokeBrdige.connect(wathcer).populateTransaction.sendProof(NON_ZERO_BYTE_UINT256);
+        bytes = await getL1EstimatedGasCost(rawTx, wathcer);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> sendProof L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(owner).populateTransaction.restore();
+        bytes = await getL1EstimatedGasCost(rawTx, owner);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> restore L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).populateTransaction.receiveProof(NON_NULL_BYTES32);
+        bytes = await getL1EstimatedGasCost(rawTx, simpleGatewayHubSigner);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> receiveProof L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    });
+    it("Cost of merkle root in claiming", async function () {
+        const [owner, user, remoteUser, relayer] = await ethers.getSigners();
+
+        const SimpleGatewaySrcSpokeBrdigeFactory = await ethers.getContractFactory("SimpleGatewaySrcSpokeBrdige");
+        const SimpleGatewayDstSpokeBrdigeFactory = await ethers.getContractFactory("SimpleGatewayDstSpokeBrdige");
+        const SimpleGatewayHubFactory = await ethers.getContractFactory("SimpleGatewayHub");
+        const ContractMapFactory = await ethers.getContractFactory("ContractMap");
+        const WrappedERC721Factory = await ethers.getContractFactory("WrappedERC721");
+
+        const contractMap = await ContractMapFactory.connect(owner).deploy();
+        const simpleGatewayHub = await SimpleGatewayHubFactory.connect(owner).deploy();
+
+        const simpleGatewaySrcSpokeBrdige = await SimpleGatewaySrcSpokeBrdigeFactory.connect(owner).deploy( contractMap.address, simpleGatewayHub.address, 4, 0);
+
+        const localERC721 = await WrappedERC721Factory.deploy("LocalERC", "LER");
+
+        const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+        const optimismGasHelper = await OptimismGasHelperFactory.deploy(30_000_000_000);
+
+        console.log(">> NFT claiming cost:");
+        for (let i = 2; i < 2**6; i = i*2) {
+            const simpleGatewayDstSpokeBrdige = await SimpleGatewayDstSpokeBrdigeFactory.connect(owner).deploy(simpleGatewayHub.address, i, 0);
+            await simpleGatewayDstSpokeBrdige.connect(relayer).deposite({value: ethers.utils.parseEther("20.0")});
+
+            const wrappedERC721 = await WrappedERC721Factory.deploy("WrappedERC", "WER");
+            await wrappedERC721.connect(owner).transferOwnership(simpleGatewayDstSpokeBrdige.address);
+            const transaction = [i, user.address, remoteUser.address, localERC721.address, wrappedERC721.address];
+            const {0: root, 1: proofs} = await simpleGatewayDstSpokeBrdige.getProof(transaction, i/2);
+            await simpleGatewayDstSpokeBrdige.connect(relayer).addIncomingBlock(root);
+            const gasUsed = (await (await simpleGatewayDstSpokeBrdige.connect(remoteUser).claimNFT(0, [i, user.address, remoteUser.address, localERC721.address, wrappedERC721.address], proofs, 0, {value: ethers.utils.parseEther("0.00")})).wait()).gasUsed;
+
+            let rawTx = await simpleGatewayDstSpokeBrdige.connect(remoteUser).populateTransaction.claimNFT(0, [i, user.address, remoteUser.address, localERC721.address, wrappedERC721.address], proofs, 0, {value: ethers.utils.parseEther("0.00")});
+            let bytes = await getL1EstimatedGasCost(rawTx, remoteUser);
+            let estimated = await optimismGasHelper.getL1Fee(bytes);
+            console.log(">> Gas used(" + i + "): " + gasUsed + '\t' + " L1 Fee in Wei: " + estimated + '\t'  +" L1 Fee in GWei: " + estimated / 10**9);
+        }
+    });
+    it("Cost of merkle root in challenging", async function () {
+        const [owner, user, remoteUser, relayer, wathcer] = await ethers.getSigners();
+
+        const SimpleGatewaySrcSpokeBrdigeFactory = await ethers.getContractFactory("SimpleGatewaySrcSpokeBrdige");
+        const SimpleGatewayDstSpokeBrdigeFactory = await ethers.getContractFactory("SimpleGatewayDstSpokeBrdige");
+        const SimpleGatewayHubFactory = await ethers.getContractFactory("BlackholeHub");
+        const ContractMapFactory = await ethers.getContractFactory("ContractMap");
+        const WrappedERC721Factory = await ethers.getContractFactory("WrappedERC721");
+
+        const contractMap = await ContractMapFactory.connect(owner).deploy();
+        const simpleGatewayHub = await SimpleGatewayHubFactory.connect(owner).deploy();
+
+        for (let i = 2; i < 2**6; i = i*2) {
+            const simpleGatewaySrcSpokeBrdige = await SimpleGatewaySrcSpokeBrdigeFactory.connect(owner).deploy( contractMap.address, simpleGatewayHub.address, i, 0);
+            await simpleGatewaySrcSpokeBrdige.connect(relayer).deposite({value: ethers.utils.parseEther("20.0")});
+
+            const wrappedERC721 = await WrappedERC721Factory.deploy("WrappedERC", "WER");
+            const localERC721 = await WrappedERC721Factory.deploy("LocalERC", "LER");
+    
+            await contractMap.connect(owner).addPair(localERC721.address, wrappedERC721.address);
+
+            for (let j = 0; j < i + 1; j++) {
+                await localERC721.connect(owner).mint(user.address, j);
+                await localERC721.connect(user).approve(simpleGatewaySrcSpokeBrdige.address, j);
+                await simpleGatewaySrcSpokeBrdige.connect(user).addNewTransactionToBlock(remoteUser.address, j, localERC721.address);
+            }
+
+            const gasUsed = (await (await simpleGatewaySrcSpokeBrdige.connect(wathcer).sendProof(0)).wait()).gasUsed;
+            console.log(">> Gas used(" + i + "): " + gasUsed);
+        }
     });
 });
