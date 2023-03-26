@@ -1,7 +1,25 @@
 const { setBalance } = require("@nomicfoundation/hardhat-network-helpers");
 const { expect } = require("chai");
+const { serialize } = require("@ethersproject/transactions");
 
 describe("Tests for gas measurements", function () {
+    const NON_ZERO_BYTE_ADDR = "0x1111111111111111111111111111111111111111";
+    const NON_ZERO_BYTE_UINT256 = "0x1111111111111111111111111111111111111111111111111111111111111111";
+    const NON_ZERO_BYTE_UINT32 = "0x11111111";
+    async function getL1EstimatedGasCost(rawTx, user) {
+      rawTx = await user.populateTransaction(rawTx);
+      let bytes = serialize({
+        data: rawTx.data,
+        to: rawTx.to,
+        gasPrice: rawTx.gasPrice,
+        type: rawTx.type,
+        gasLimit: rawTx.gasLimit,
+        nonce: 0xffffffff,
+      });
+  
+      return bytes;
+    }
+
     it("Wrapping cycle of PegNFT", async function () { // FIXME npx hardhat test --grep "Wrapping cycle of PegNFT"
         const [owner, user, remoteUser] = await ethers.getSigners();
         const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
@@ -48,5 +66,44 @@ describe("Tests for gas measurements", function () {
         await remoteBridge.connect(remoteUser).xCall(500, 10000, 10000, wrappedHashi721.address, user.address, 0, true);
         const messageToLocal = localBridge._encodeCallData(1, faucetHashi721.address, user.address, 0, "");
         await localBridge.connect(connextHelperSigner).xReceive(NON_NULL_BYTES32, 0, ZERO_ADDRESS, remoteBridge.address, 999, messageToLocal);
+
+        const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+        const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
+
+        // L1 gas estimation for L2 functions
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log("L1 gas estimation for L2 functions");
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        let rawTx = await remoteBridge.connect(user).populateTransaction.xCall(NON_ZERO_BYTE_UINT32, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT256, true);
+        let bytes = await getL1EstimatedGasCost(rawTx, user);
+    
+        let estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> remoteBridge.xCall L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await remoteBridge.connect(connextHelperSigner).populateTransaction.xReceive(NON_NULL_BYTES32, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT32, messageToRemote);
+        bytes = await getL1EstimatedGasCost(rawTx, connextHelperSigner);
+    
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> remoteBridge.xReceive L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+    
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await localBridge.connect(connextHelperSigner).populateTransaction.xReceive(NON_NULL_BYTES32, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT32, messageToRemote);
+        bytes = await getL1EstimatedGasCost(rawTx, connextHelperSigner);
+    
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> localBridge.xReceive L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+    
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        rawTx = await localBridge.connect(user).populateTransaction.xCall(NON_ZERO_BYTE_UINT32, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_UINT256, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT256, true);
+        bytes = await getL1EstimatedGasCost(rawTx, user);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> localBridge.xCall L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+    
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     });
 });
