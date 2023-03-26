@@ -4,7 +4,7 @@ pragma solidity >=0.8.0;
 
 import "./interfaces/IMessageBus.sol";
 
-contract MinimalMessageBus is IMessageBus {
+contract FunctionalMinimalMessageBus is IMessageBus {
     uint256 public feeBase;
     uint256 public feePerByte;
 

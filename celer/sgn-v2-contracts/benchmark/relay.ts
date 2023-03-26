@@ -13,6 +13,8 @@ import { Bridge, TestERC20 } from '../typechain';
 import { deployBridgeContracts, getAccounts, loadFixture } from '../test/lib/common';
 import { getRelayRequest } from '../test/lib/proto';
 import { BigNumber } from '@ethersproject/bignumber';
+import { serialize } from '@ethersproject/transactions';
+
 
 const GAS_USAGE_DIR = 'reports/gas_usage/';
 const GAS_USAGE_LOG = path.join(GAS_USAGE_DIR, 'relay.txt');
@@ -22,7 +24,7 @@ describe('Relay Gas Benchmark', function () {
     fs.mkdirSync(GAS_USAGE_DIR, { recursive: true });
   }
   fs.rmSync(GAS_USAGE_LOG, { force: true });
-  fs.appendFileSync(GAS_USAGE_LOG, '<validatorNum, quorumSigNum, gasCost> for cbr testErc20 relay tx\n\n');
+  fs.appendFileSync(GAS_USAGE_LOG, '<validatorNum, quorumSigNum, gasCost> for executing a bridge message\n\n');
 
   async function fixture([admin]: Wallet[]) {
     const { bridge, token } = await deployBridgeContracts(admin);
@@ -37,7 +39,19 @@ describe('Relay Gas Benchmark', function () {
   let msgExampleBasic;
 
   const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+  async function getL1EstimatedGasCost(rawTx, user) {
+    rawTx = await user.populateTransaction(rawTx);
+    const bytes = serialize({
+      data: rawTx.data,
+      to: rawTx.to,
+      gasPrice: rawTx.gasPrice,
+      type: rawTx.type,
+      gasLimit: rawTx.gasLimit,
+      nonce: 0xffffffff,
+    });
 
+    return bytes;
+  }
   beforeEach(async () => {
     const res = await loadFixture(fixture);
     bridge = res.bridge;
@@ -152,7 +166,15 @@ describe('Relay Gas Benchmark', function () {
     };
 
     const gasUsed = (await (await busReceiver.functions['executeMessage(bytes,(address,bytes,address,uint64,bytes32),bytes[],address[],uint256[],string)'](relayBytes, route, sigs, addrs, powers, "Relay")).wait()).gasUsed;
-    fs.appendFileSync(GAS_USAGE_LOG, signerNum.toString() + '\t' + quorumSigNum.toString() + '\t' + gasUsed + '\n');
+
+    const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+    const optimismGasHelper = await OptimismGasHelperFactory.deploy(30_000_000_000);
+
+    const rawTx = await busReceiver.connect(sender).populateTransaction['executeMessage(bytes,(address,bytes,address,uint64,bytes32),bytes[],address[],uint256[],string)'](relayBytes, route, sigs, addrs, powers, "Relay");
+    const bytes = await getL1EstimatedGasCost(rawTx, sender);
+    const estimatedL1ForL2 = await optimismGasHelper.getL1Fee(bytes);
+
+    fs.appendFileSync(GAS_USAGE_LOG, signerNum.toString() + '\t' + quorumSigNum.toString() + '\t' + gasUsed + '\t' + " L1 Fee in GWei: " + estimatedL1ForL2 / 10**9 + '\n');
     return gasUsed;
   }
 });
