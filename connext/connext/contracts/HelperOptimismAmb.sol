@@ -7,13 +7,18 @@ import {Message} from "./messaging/libraries/Message.sol";
 
 contract HelperOptimismAmb is OptimismAmb {
     address sender;
+    uint256 messageLen;
 
     function sendMessage(
-        address _target,
+        address,
         bytes memory _message,
-        uint32 _gasLimit
+        uint32
     ) public {
+        messageLen = _message.length;
+    }
 
+    function lastMessageLen() public view returns (uint256) {
+        return messageLen;
     }
 
     function setSender(address _sender) public {

@@ -165,7 +165,10 @@ describe("Tests for gas measurements", function () {
 
         // L1 to L2
         // on L1
-        await rootManager.connect(owner).propagate([optimismHubConnector.address], [100000], [NON_NULL_BYTES32]);
+        await rootManager.connect(owner).propagate([optimismHubConnector.address], [100000], [NON_NULL_BYTES32], { value: ethers.utils.parseEther("0.5") });
+        const messageLen = await helperOptimismAmb.lastMessageLen();
+        console.log("Send message from L1 to L2 len: " + messageLen);
+
 
         // process message
         const helperOptimismAmbSigner = await ethers.getImpersonatedSigner(helperOptimismAmb.address);
