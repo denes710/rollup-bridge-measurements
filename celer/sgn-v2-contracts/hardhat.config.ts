@@ -443,7 +443,7 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 800
+        runs: 1000
       }
     }
   },

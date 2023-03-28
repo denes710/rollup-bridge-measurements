@@ -175,8 +175,21 @@ describe("Tests for gas measurements", function () {
         const MinimalMessageBusFactory = await ethers.getContractFactory("FunctionalMinimalMessageBus");
 
         const minimalMessageBus = await MinimalMessageBusFactory.connect(owner).deploy();
-        const message = minimalMessageBus.getEncodedData(NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT256, "");
+        const message = await minimalMessageBus.getEncodedData(NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_UINT256, "");
         await minimalMessageBus.connect(owner).sendMessage(owner.address, 1111, message);
+
+        // L1 gas estimation for L2 functions
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log("L1 gas estimation for L2 functions");
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+        const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
+
+        let rawTx = await minimalMessageBus.connect(owner).populateTransaction.sendMessage(NON_ZERO_BYTE_ADDR, 1111, message);
+        let bytes = await getL1EstimatedGasCost(rawTx, owner);
+        let estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> minimalMessageBus.sendMessage L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9 + " message len: " + message.length);
     });
     it("Wrapping cycle func of MCNNFT", async function () {
         const [owner, user, remoteUser] = await ethers.getSigners();
