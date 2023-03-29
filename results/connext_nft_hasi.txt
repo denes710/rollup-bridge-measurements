@@ -1,0 +1,175 @@
+Connext
+
+solidity: {
+version: "0.8.17",
+settings: {
+    optimizer: {
+    enabled: true,
+    runs: 1000,
+    },
+},
+}
+
+<L1, L2->L1> - ide jon be a root relayerektol
+································|··························|·············|·············|··············|···············|··············
+|  OptimismHubConnector         ·  processMessageFromRoot  ·          -  ·          -  ·      674533  ·            1  ·          -  │
+································|··························|·············|·············|··············|···············|··············
+
+<L2, L2->L1> alkalmazas hivja amikor Xcall van
+································|··························|·············|·············|··············|···············|··············
+|  OptimismSpokeConnector       ·  dispatch                ·          -  ·          -  ·      182188  ·            1  ·          -  │
+································|··························|·············|·············|··············|···············|··············
+
+<L2, L1->L2> - aggregated root ide jon be
+································|··························|·············|·············|··············|···············|··············
+|  OptimismSpokeConnector       ·  processMessage          ·          -  ·          -  ·       55508  ·            1  ·          -  │
+································|··························|·············|·············|··············|···············|··············
+
+<L2, L1->L2> - amikor jon az uj root es handeljuk a tobbi contractnak
+································|··························|·············|·············|··············|···············|··············
+|  OptimismSpokeConnector       ·  proveAndProcess         ·          -  ·          -  ·      155653  ·            1  ·          -  │
+································|··························|·············|·············|··············|···············|··············
+
+<L1, L1->L2> (using AMB) amikor root megy ki
+································|··························|·············|·············|··············|···············|··············
+|  RootManager                  ·  propagate               ·          -  ·          -  ·       98613  ·            1  ·          -  │
+································|··························|·············|·············|··············|···············|··············
+
+<L2, L2->L1>
+···························|·······················|·············|·············|··············|···············|··············
+|  BridgeFacet             ·  xcall                ·          -  ·          -  ·      259340  ·            1  ·          -  │
+···························|·······················|·············|·············|··············|···············|··············
+
+Send Message len
+RootManager.propagate
+bytes32 _aggregateRoo -> bytes32
+32*2 + 32 + 4 // selector = 100 bytes => 4*32 lesz a vege
+
+
+OptimismSpokeConnector.dispatch()
+  * @notice This function adds transfers to the outbound transfer merkle tree.
+  * @dev The root of this tree will eventually be dispatched to mainnet via `send`. On mainnet (the "hub"),
+
+OptimismSpokeConnector.proveAndProcess()
+  * @notice Must be able to call the `handle` function on the BridgeRouter contract. This is called
+  * on the destination domain to handle incoming messages.
+   * @dev Recipient must implement a `handle` method (refer to IMessageRecipient.sol)
+
+OptimismSpokeConnector.processMessage()
+* @notice Processes a message received by an AMB
+* @dev Handles an incoming `aggregateRoot`
+
+OptimismHubConnector.processMessageFromRoot()
+on L1 - somebody gives a new root from the L2································|··························|·············|·············|··············|···············|··············
+|  OptimismSpokeConnector       ·  processMessage          ·          -  ·          -  ·       55486  ·            1  ·          -  │
+································|··························|·············|·············|··············|···············|··············
+
+
+RootManager.propagate()
+* @notice This is called by relayers to take the current aggregate tree root and propagate it to all
+* spoke domains (via their respective hub connectors).
+* @dev Should be called by relayers at a regular interval.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+L1 gas estimation for L2 functions
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> optimismSpokeConnector.dispatch L1 Fee in Wei: 160920000000000 L1 Fee in GWei: 160920
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>> optimismSpokeConnector.populateTransaction L1 Fee in Wei: 141000000000000 L1 Fee in GWei: 141000
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>> optimismSpokeConnector.proveAndProcess L1 Fee in Wei: 1184760000000000 L1 Fee in GWei: 1184760
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Prove and process on L2
+Proofs: 1 	 Consumed gas: 1020843 	 	  	 L1 fee(GWei): 1173240
+Proofs: 2 	 Consumed gas: 1055007 	 	  	 L1 fee(GWei): 1721400
+Proofs: 4 	 Consumed gas: 1124802 	 	  	 L1 fee(GWei): 2817720
+Proofs: 8 	 Consumed gas: 1256206 	 	  	 L1 fee(GWei): 5010360
+Proofs: 16 	 Consumed gas: 1527484 	 	  	 L1 fee(GWei): 9395280
+Proofs: 32 	 Consumed gas: 2068550 	 	  	 L1 fee(GWei): 18165120
+Proofs: 64 	 Consumed gas: 3174204 	 	  	 L1 fee(GWei): 35710080
+
+// xcall on L2
+Bytes: 32 	 Consumed gas: 259140
+Bytes: 64 	 Consumed gas: 259570
+Bytes: 96 	 Consumed gas: 260499
+Bytes: 128 	 Consumed gas: 261429
+Bytes: 160 	 Consumed gas: 262359
+Bytes: 192 	 Consumed gas: 263290
+Bytes: 224 	 Consumed gas: 264221
+Bytes: 256 	 Consumed gas: 265150
+Bytes: 288 	 Consumed gas: 266092
+Bytes: 320 	 Consumed gas: 267023
+Bytes: 352 	 Consumed gas: 267954
+Bytes: 384 	 Consumed gas: 268885
+Bytes: 416 	 Consumed gas: 269815
+Bytes: 448 	 Consumed gas: 270745
+Bytes: 480 	 Consumed gas: 271675
+Bytes: 512 	 Consumed gas: 272595
+
+
+///////////
+NFT hashi
+solidity: {
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+
+<R1, R1->R2>
+····················|·····················|·············|·············|··············|···············|··············
+|  Hashi721Bridge   ·  xCall              ·          -  ·          -  ·       75901  ·            1  ·          -  │
+····················|·····················|·············|·············|··············|···············|··············
+
+<R2, R1->R2>
+····················|·····················|·············|·············|··············|···············|··············
+|  Hashi721Bridge   ·  xReceive           ·          -  ·          -  ·       90018  ·            1  ·          -  │
+····················|·····················|·············|·············|··············|···············|··············
+
+<R2, R2->R1>
+····················|·····················|·············|·············|··············|···············|··············
+|  Hashi721Bridge   ·  xCall              ·          -  ·          -  ·       51346  ·            1  ·          -  │
+
+<R1, R2->R1>
+····················|·····················|·············|·············|··············|···············|··············
+|  Hashi721Bridge   ·  xReceive           ·          -  ·          -  ·       70574  ·            1  ·          -  │
+····················|·····················|·············|·············|··············|···············|··············
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+L1 gas estimation for L2 functions
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> remoteBridge.xCall L1 Fee in Wei: 195360000000000 L1 Fee in GWei: 195360
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>> remoteBridge.xReceive L1 Fee in Wei: 222480000000000 L1 Fee in GWei: 222480
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>> localBridge.xReceive L1 Fee in Wei: 222480000000000 L1 Fee in GWei: 222480
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>> localBridge.xCall L1 Fee in Wei: 195360000000000 L1 Fee in GWei: 195360
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+fromLocal(l2) calldata len: 192
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+fromRemote(l2) calldata len: 192
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+for 192 byres
+···························|·······················|·············|·············|··············|···············|··············
+|  BridgeFacet             ·  xcall                ·          -  ·          -  ·      259340  ·            1  ·          -  │
+···························|·······················|·············|·············|··············|···············|··············
+
+
+  function _encodeCallData(
+    uint32 originalDomainId,
+    address originalAsset,
+    address to,
+    uint256 tokenId,
+    string memory tokenURI
+  ) public pure returns (bytes memory) {
+    return abi.encode(originalDomainId, originalAsset, to, tokenId, tokenURI);
+  }

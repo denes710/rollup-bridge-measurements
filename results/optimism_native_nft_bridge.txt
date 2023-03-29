@@ -1,0 +1,70 @@
+Optimism native nft bridge
+
+<L1, L1->L2>
+·····················|···························|·············|·············|··············|···············|··············
+|  L1Bridge          ·  bridgeERC721To           ·          -  ·          -  ·      123315  ·            1  ·          -  │
+·····················|···························|·············|·············|··············|···············|··············
+
+<L1, L2->L1>
+·····················|···························|·············|·············|··············|···············|··············
+|  L1Bridge          ·  finalizeBridgeERC721     ·          -  ·          -  ·       72196  ·            1  ·          -  │
+·····················|···························|·············|·············|··············|···············|··············
+
+<L2, L2->L1>
+·····················|···························|·············|·············|··············|···············|··············
+|  L2Bridge          ·  bridgeERC721To           ·          -  ·          -  ·       71839  ·            1  ·          -  │
+·····················|···························|·············|·············|··············|···············|··············
+
+<L2, L1->L2>
+·····················|···························|·············|·············|··············|···············|··············
+|  L2Bridge          ·  finalizeBridgeERC721     ·          -  ·          -  ·      160110  ·            1  ·          -  │
+·····················|···························|·············|·············|··············|···············|··············
+
+
+<L2, L2->L1>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> l2Bridge.bridgeERC721To L1 Fee in Wei: 179520000000000 L1 Fee in GWei: 179520
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+<L2, L1->L2>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> l2Bridge.finalizeBridgeERC721 L1 Fee in Wei: 185280000000000 L1 Fee in GWei: 185280
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+* @notice Completes an ERC721 bridge from the other domain and sends the ERC721 token to the
+*         recipient on this domain.
+function finalizeBridgeERC721(
+
+* @notice Initiates a bridge of an NFT to some recipient's account on the other chain. Note
+*         that the current owner of the token on this chain must approve this contract to
+*         operate the NFT before it can be bridged.
+*         **WARNING**: Do not bridge an ERC721 that was originally deployed on Optimism. This
+*         bridge only supports ERC721s originally deployed on Ethereum. Users will need to
+*         wait for the one-week challenge period to elapse before their Optimism-native NFT
+*         can be refunded on L2.
+function bridgeERC721To(
+
+
+
+        bytes memory message = abi.encodeWithSelector(
+            L2ERC721Bridge.finalizeBridgeERC721.selector, // 4
+            _remoteToken, // 32
+            _localToken, // 32
+            _from, // 32 
+            _to, // 32
+            _tokenId, // 32
+            _extraData // 32
+        );
+
+-> 6 * 32 + 4
+
+        bytes memory message = abi.encodeWithSelector(
+            L1ERC721Bridge.finalizeBridgeERC721.selector,
+            remoteToken,
+            _localToken,
+            _from,
+            _to,
+            _tokenId,
+            _extraData
+        );
+->  same shit

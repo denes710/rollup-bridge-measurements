@@ -1,0 +1,120 @@
+>> Celler-guardian
+- only communicate on L2
+- generating benchmark report files: yarn report-gas:benchmark
+
+30+ contracts are ==  0.8.9 
+solidity: {
+version: '0.8.9',
+settings: {
+    optimizer: {
+    enabled: true,
+    runs: 1000
+    }
+}
+},
+
+busReceiver.executeMessage
+<validatorNum, quorumSigNum, gasCost, L1 fee for L2> for executing a bridge message
+
+5	3	110091	 L1 Fee in GWei: 581880
+7	3	116098	 L1 Fee in GWei: 702240
+7	5	127266	 L1 Fee in GWei: 703320
+9	3	122187	 L1 Fee in GWei: 824400
+9	5	133227	 L1 Fee in GWei: 824040
+9	7	144359	 L1 Fee in GWei: 824040
+11	3	128231	 L1 Fee in GWei: 945840
+11	5	139272	 L1 Fee in GWei: 945480
+11	7	150360	 L1 Fee in GWei: 944760
+13	3	134217	 L1 Fee in GWei: 1065480
+13	5	145322	 L1 Fee in GWei: 1065840
+13	7	156379	 L1 Fee in GWei: 1066560
+13	9	167356	 L1 Fee in GWei: 1065480
+15	3	140256	 L1 Fee in GWei: 1187280
+15	5	151381	 L1 Fee in GWei: 1187640
+15	7	162382	 L1 Fee in GWei: 1187280
+15	9	173403	 L1 Fee in GWei: 1186920
+15	11	184561	 L1 Fee in GWei: 1187640
+17	3	146311	 L1 Fee in GWei: 1308360
+17	5	157348	 L1 Fee in GWei: 1307280
+17	7	168397	 L1 Fee in GWei: 1308360
+17	9	179491	 L1 Fee in GWei: 1308360
+17	11	190625	 L1 Fee in GWei: 1308360
+19	3	152396	 L1 Fee in GWei: 1430880
+19	5	163405	 L1 Fee in GWei: 1430160
+19	7	174411	 L1 Fee in GWei: 1428720
+19	9	185516	 L1 Fee in GWei: 1429080
+19	11	196615	 L1 Fee in GWei: 1428000
+19	13	207721	 L1 Fee in GWei: 1430160
+21	3	158433	 L1 Fee in GWei: 1551960
+21	5	169439	 L1 Fee in GWei: 1550520
+21	7	180620	 L1 Fee in GWei: 1551960
+21	9	191630	 L1 Fee in GWei: 1551240
+21	11	202680	 L1 Fee in GWei: 1550520
+21	13	213747	 L1 Fee in GWei: 1550880
+21	15	224782	 L1 Fee in GWei: 1550880
+
+
+································|···············|·············|·············|··············|···············|··············
+|  FunctionalMinimalMessageBus  ·  sendMessage  ·          -  ·          -  ·       32945  ·            1  ·          -  │
+································|···············|·············|·············|··············|···············|··············
+-> contractbol hivodik es mivel fix nft-ekkel dolgozunk kiszamolhato a max valuekkal
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+L1 gas estimation for L2 functions
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> minimalMessageBus.sendMessage L1 Fee in Wei: 191880000000000 L1 Fee in GWei: 191880 message len: 386
+
+>> NFT bridge contracts
+
+contracts are written in 0.8.9
+solidity: {
+    version: "0.8.9",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  }
+
+>> Wrapping cycle of MCNNFT
+
+··············|··················|·············|·············|··············|···············|··············
+|  MCNNFT     ·  crossChain      ·      64486  ·      64498  ·       64492  ·            2  ·          -  │
+··············|··················|·············|·············|··············|···············|··············
+|  NFTBridge  ·  executeMessage  ·      90125  ·      90137  ·       90131  ·            2  ·          -  │
+··············|··················|·············|·············|··············|···············|··············
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+L1 gas estimation for L2 functions
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>> localMcnNFT.crossChain L1 Fee in Wei: 150360000000000 L1 Fee in GWei: 150360
+>> remoteMcnNFT.crossChain L1 Fee in Wei: 150000000000000 L1 Fee in GWei: 150000
+>> localNftBridge.executeMessage L1 Fee in Wei: 165480000000000 L1 Fee in GWei: 165480
+>> remoteNftBridge.executeMessage L1 Fee in Wei: 165480000000000 L1 Fee in GWei: 165480
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// called by user, burn token on this chain and mint same id/uri on dest chain
+crossChain()
+
+* @notice Called by MessageBus (MessageBusReceiver)
+executeMessage()
+
+
+>> Wrapping cycle of MCNNFT
+
+··············|··················|·············|·············|··············|···············|··············
+|  NFTBridge  ·  executeMessage  ·      70585  ·      87947  ·       79266  ·            2  ·          -  │
+··············|··················|·············|·············|··············|···············|··············
+|  NFTBridge  ·  sendTo          ·      57666  ·      86829  ·       72248  ·            2  ·          -  │
+··············|··················|·············|·············|··············|···············|··············
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+L1 gas estimation for L2 functions
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> localNftBridge.sendTo L1 Fee in Wei: 161400000000000 L1 Fee in GWei: 161400
+>> remoteNftBridge.sendTo L1 Fee in Wei: 161400000000000 L1 Fee in GWei: 161400
+>> localNftBridge.executeMessage L1 Fee in Wei: 165480000000000 L1 Fee in GWei: 165480
+>> remoteNftBridge.executeMessage L1 Fee in Wei: 165480000000000 L1 Fee in GWei: 165480
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+* @notice locks or burn user's NFT in this contract and send message to mint (or withdraw) on dest chain
+sendTo()
