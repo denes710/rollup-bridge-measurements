@@ -2009,8 +2009,8 @@
       ]
     },
     "/home/denes710/Desktop/degree_work/measurements/connext/nfthashi/contracts/ConnextHelper.sol": {
-      "lastModificationDate": 1679402043976,
-      "contentHash": "59ab2f0e76681f86510921997bdcc756",
+      "lastModificationDate": 1680064095196,
+      "contentHash": "b56780c0f3060860a30fca9fb71ab6d7",
       "sourceName": "contracts/ConnextHelper.sol",
       "solcConfig": {
         "version": "0.8.17",

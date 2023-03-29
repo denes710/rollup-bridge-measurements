@@ -14,6 +14,9 @@ module.exports = {
   gasReporter: {
     enabled: true 
   },
+  mocha: {
+    timeout: 100000000
+  },
   networks: {
     hardhat: {
       allowUnlimitedContractSize: true

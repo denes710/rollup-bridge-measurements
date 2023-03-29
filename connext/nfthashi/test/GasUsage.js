@@ -56,6 +56,9 @@ describe("Tests for gas measurements", function () {
 
         // Local->Remote
         await localBridge.connect(user).xCall(999, 10000, 10000, faucetHashi721.address, remoteUser.address, 0, true);
+        const fromLocal = await connextHelper.calldataLen();
+        console.log("fromLocal(l2) calldata len: " + fromLocal);
+
         const messageToRemote = remoteBridge._encodeCallData(999, wrappedHashi721.address, remoteUser.address, 0, "");
         await remoteBridge.connect(connextHelperSigner).xReceive(NON_NULL_BYTES32, 0, ZERO_ADDRESS, localBridge.address, 500, messageToRemote);
         expect(await wrappedHashi721.ownerOf(0)).to.equal(remoteUser.address);
@@ -64,6 +67,9 @@ describe("Tests for gas measurements", function () {
         // Remote->Local
         await remoteBridge.setForWrapper(wrappedHashi721.address, 500, faucetHashi721.address);
         await remoteBridge.connect(remoteUser).xCall(500, 10000, 10000, wrappedHashi721.address, user.address, 0, true);
+        const fromRemote = await connextHelper.calldataLen();
+        console.log("fromRemote(l2) calldata len: " + fromRemote);
+
         const messageToLocal = localBridge._encodeCallData(1, faucetHashi721.address, user.address, 0, "");
         await localBridge.connect(connextHelperSigner).xReceive(NON_NULL_BYTES32, 0, ZERO_ADDRESS, remoteBridge.address, 999, messageToLocal);
 

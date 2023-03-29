@@ -14,7 +14,7 @@ contract HelperOptimismAmb is OptimismAmb {
         bytes memory _message,
         uint32
     ) public {
-        messageLen = _message.length;
+        // messageLen = _message.length;
     }
 
     function lastMessageLen() public view returns (uint256) {

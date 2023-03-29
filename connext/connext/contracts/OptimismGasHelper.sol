@@ -73,4 +73,14 @@ contract OptimismGasHelper{
         uint256 scaled = unscaled / divisor;
         return scaled;
     }
+
+    function encodeCallData(
+    uint32 originalDomainId,
+    address originalAsset,
+    address to,
+    uint256 tokenId,
+    string memory tokenURI
+    ) public pure returns (bytes memory) {
+        return abi.encode(originalDomainId, originalAsset, to, tokenId, tokenURI);
+    }
 }
