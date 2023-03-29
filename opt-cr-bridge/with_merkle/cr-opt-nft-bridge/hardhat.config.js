@@ -4,18 +4,22 @@ require("@nomiclabs/hardhat-ethers");
 require("dotenv").config();
 
 module.exports = {
-  solidity: "0.8.18",
+  solidity: {
+    version: "0.8.18",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
   gasReporter: {
     enabled: true 
   },
-  settings: {
-    optimizer: {
-      enabled: true,
-    }
-  },
   networks: {
     hardhat: {
-      allowUnlimitedContractSize: true
+      allowUnlimitedContractSize: true,
+      blockGasLimit: 50000000
     }
   }
 };

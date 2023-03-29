@@ -183,9 +183,10 @@ describe("Tests for gas measurements", function () {
         await simpleGatewayDstSpokeBrdige.connect(relayer).addIncomingBlock(transactionRoot)
 
         await simpleGatewayHub.connect(owner).addSpokeBridge(simpleGatewaySrcSpokeBrdige.address, simpleGatewayDstSpokeBrdige.address);
-        await simpleGatewayDstSpokeBrdige.connect(wathcer).challengeIncomingBlock(1, {value: ethers.utils.parseEther("10.0")});
-        await simpleGatewaySrcSpokeBrdige.connect(wathcer).sendProof(1);
-        await simpleGatewayDstSpokeBrdige.connect(owner).restore();
+        // we dealing with in other cases
+        // await simpleGatewayDstSpokeBrdige.connect(wathcer).challengeIncomingBlock(1, {value: ethers.utils.parseEther("10.0")});
+        // await simpleGatewaySrcSpokeBrdige.connect(wathcer).sendProof(1);
+        // await simpleGatewayDstSpokeBrdige.connect(owner).restore();
 
         await simpleGatewayDstSpokeBrdige.connect(remoteUser).deposite({value: ethers.utils.parseEther("20.0")});
 
@@ -196,7 +197,7 @@ describe("Tests for gas measurements", function () {
         const simpleGatewayHubSigner = await ethers.getImpersonatedSigner(simpleGatewayHub.address);
         await setBalance(simpleGatewayHub.address, 100n ** 18n);
 
-        const message = await simpleGatewayHub.getMessage(1, transactionRoot);
+        const message = await simpleGatewayHub.getMessage(1, NON_NULL_BYTES32);
         await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).receiveProof(message);
 
         const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
@@ -228,7 +229,8 @@ describe("Tests for gas measurements", function () {
 
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        rawTx = await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).populateTransaction.receiveProof(NON_NULL_BYTES32);
+        const bigProof = await simpleGatewayHub.getMessage(NON_ZERO_BYTE_UINT256, NON_NULL_BYTES32);
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).populateTransaction.receiveProof(bigProof);
         bytes = await getL1EstimatedGasCost(rawTx, simpleGatewayHubSigner);
         estimated = await optimismGasHelper.getL1Fee(bytes);
         console.log(">> receiveProof L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
@@ -255,21 +257,21 @@ describe("Tests for gas measurements", function () {
         const optimismGasHelper = await OptimismGasHelperFactory.deploy(30_000_000_000);
 
         console.log(">> NFT claiming cost:");
-        for (let i = 2; i < 2**6; i = i*2) {
+        for (let i = 2; i <= 2**5; i++) {
             const simpleGatewayDstSpokeBrdige = await SimpleGatewayDstSpokeBrdigeFactory.connect(owner).deploy(simpleGatewayHub.address, i, 0);
             await simpleGatewayDstSpokeBrdige.connect(relayer).deposite({value: ethers.utils.parseEther("20.0")});
 
             const wrappedERC721 = await WrappedERC721Factory.deploy("WrappedERC", "WER");
             await wrappedERC721.connect(owner).transferOwnership(simpleGatewayDstSpokeBrdige.address);
             const transaction = [i, user.address, remoteUser.address, localERC721.address, wrappedERC721.address];
-            const {0: root, 1: proofs} = await simpleGatewayDstSpokeBrdige.getProof(transaction, i/2);
+            const {0: root, 1: proofs} = await simpleGatewayDstSpokeBrdige.getProof(transaction, i - 1);
             await simpleGatewayDstSpokeBrdige.connect(relayer).addIncomingBlock(root);
             const gasUsed = (await (await simpleGatewayDstSpokeBrdige.connect(remoteUser).claimNFT(0, [i, user.address, remoteUser.address, localERC721.address, wrappedERC721.address], proofs, 0, {value: ethers.utils.parseEther("0.00")})).wait()).gasUsed;
 
             let rawTx = await simpleGatewayDstSpokeBrdige.connect(remoteUser).populateTransaction.claimNFT(0, [i, user.address, remoteUser.address, localERC721.address, wrappedERC721.address], proofs, 0, {value: ethers.utils.parseEther("0.00")});
             let bytes = await getL1EstimatedGasCost(rawTx, remoteUser);
             let estimated = await optimismGasHelper.getL1Fee(bytes);
-            console.log(">> Gas used(" + i + "): " + gasUsed + '\t' + " L1 Fee in Wei: " + estimated + '\t'  +" L1 Fee in GWei: " + estimated / 10**9);
+            console.log(">> Gas used(" + i + " height): " + gasUsed + '\t '  +" L1 Fee in GWei: " + estimated / 10**9);
         }
     });
     it("Cost of merkle root in challenging", async function () {
@@ -284,7 +286,8 @@ describe("Tests for gas measurements", function () {
         const contractMap = await ContractMapFactory.connect(owner).deploy();
         const simpleGatewayHub = await SimpleGatewayHubFactory.connect(owner).deploy();
 
-        for (let i = 2; i < 2**6; i = i*2) {
+        let idx = 13;
+        for (let i = 2**13; i < 2**16; i = i*2) {
             const simpleGatewaySrcSpokeBrdige = await SimpleGatewaySrcSpokeBrdigeFactory.connect(owner).deploy( contractMap.address, simpleGatewayHub.address, i, 0);
             await simpleGatewaySrcSpokeBrdige.connect(relayer).deposite({value: ethers.utils.parseEther("20.0")});
 
@@ -300,7 +303,8 @@ describe("Tests for gas measurements", function () {
             }
 
             const gasUsed = (await (await simpleGatewaySrcSpokeBrdige.connect(wathcer).sendProof(0)).wait()).gasUsed;
-            console.log(">> Gas used(" + i + "): " + gasUsed);
+            console.log(">> Gas used(" + idx + " \t h, " + i + " \t n): \t " + gasUsed);
+            idx += 1;
         }
     });
 });

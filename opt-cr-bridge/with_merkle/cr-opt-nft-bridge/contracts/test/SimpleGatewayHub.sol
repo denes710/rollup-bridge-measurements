@@ -24,6 +24,7 @@ contract SimpleGatewayHub is IHub, Ownable {
     }
 
     function getMessage(uint256 _height, bytes32 _root) public view returns (bytes memory) {
-        return abi.encode(_height, _root);
+        bytes memory data = abi.encode(_height, _root);
+        return data;
     }
 }
