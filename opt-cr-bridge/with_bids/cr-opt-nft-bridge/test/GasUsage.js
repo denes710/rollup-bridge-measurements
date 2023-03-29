@@ -144,7 +144,8 @@ describe("Tests for gas measurements", function () {
     });
     it("Challing cycle", async function () {
         const [owner, user, remoteUser, relayer, wathcer] = await ethers.getSigners();
-    
+        const NON_NULL_BYTES32_RAW = '1111111111111111111111111111111111111111111111111111111111111111';
+        
         const SimpleGatewaySrcSpokeBrdigeFactory = await ethers.getContractFactory("SimpleGatewaySrcSpokeBrdige");
         const SimpleGatewayDstSpokeBrdigeFactory = await ethers.getContractFactory("SimpleGatewayDstSpokeBrdige");
         const SimpleGatewayHubFactory = await ethers.getContractFactory("SimpleGatewayHub");
@@ -195,6 +196,10 @@ describe("Tests for gas measurements", function () {
         const proof = await simpleGatewayHub.getMessage(true);
         await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).receiveProof(proof);
 
+//        await time.increase(3600 * 4);
+//        const proofIncoming = await simpleGatewayHub.getMessage(false);
+//        await simpleGatewaySrcSpokeBrdige.connect(simpleGatewayHubSigner).receiveProof(proofIncoming);
+
         const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
         const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
 
@@ -217,10 +222,29 @@ describe("Tests for gas measurements", function () {
 
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-        rawTx = await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).populateTransaction.receiveProof(NON_NULL_BYTES32);
+        // outgoing data == 224 byte
+        let input = "";
+        for (let i = 0; i < 7; i++) {
+            input += NON_NULL_BYTES32_RAW;
+        }
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).populateTransaction.receiveProof("0x" + input);
         bytes = await getL1EstimatedGasCost(rawTx, simpleGatewayHubSigner);
         estimated = await optimismGasHelper.getL1Fee(bytes);
-        console.log(">> simpleGatewayDstSpokeBrdige.receiveProof L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+        console.log(">> simpleGatewayDstSpokeBrdige.receiveProof Outgoing proof L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        // incoming data == 256 byte
+        input = "";
+        for (let i = 0; i < 8; i++) {
+            input += NON_NULL_BYTES32_RAW;
+        }
+
+        rawTx = await simpleGatewayDstSpokeBrdige.connect(simpleGatewayHubSigner).populateTransaction.receiveProof("0x" + input);
+        bytes = await getL1EstimatedGasCost(rawTx, simpleGatewayHubSigner);
+        estimated = await optimismGasHelper.getL1Fee(bytes);
+        console.log(">> simpleGatewayDstSpokeBrdige.receiveProof Incoming proof L1 Fee in Wei: " + estimated + " L1 Fee in GWei: " + estimated / 10**9);
 
         console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     });

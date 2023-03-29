@@ -2,14 +2,17 @@
 require("@nomicfoundation/hardhat-toolbox");
 
 module.exports = {
-  solidity: "0.8.18",
+  solidity: {
+    version: "0.8.18",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1000,
+      },
+    },
+  },
   gasReporter: {
     enabled: true 
-  },
-  settings: {
-    optimizer: {
-      enabled: true,
-    }
   },
   networks: {
     hardhat: {

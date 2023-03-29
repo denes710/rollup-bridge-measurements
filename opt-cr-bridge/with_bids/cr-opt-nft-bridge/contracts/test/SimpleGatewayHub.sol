@@ -8,6 +8,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SimpleGatewayHub is IHub, Ownable {
     mapping(address => address) public bridgeToBrdige;
+    uint256 messageLen;
 
     function processMessage(bytes memory _data) public override {
         require(bridgeToBrdige[_msgSender()] != address(0), "Hub: contract has no pair!");
@@ -24,12 +25,14 @@ contract SimpleGatewayHub is IHub, Ownable {
     }
 
     function getMessage(bool _isOutgoingBid) public view returns (bytes memory) {
+        uint256 value = 1;
+
         if (_isOutgoingBid) {
             bytes memory data = abi.encode(
-                2,
-                bytes32(""),
+                value,
+                bytes32("ASD"),
                 address(this),
-                2
+                value
             );
 
             data = abi.encode(data, true);
@@ -37,15 +40,14 @@ contract SimpleGatewayHub is IHub, Ownable {
         } else {
 
             bytes memory data = abi.encode(
-                2,
-                bytes32(""),
+                value,
+                bytes32("ASD"),
                 address(this),
-                2,
+                value,
                 address(this)
             );
 
             data = abi.encode(data, false);
-
             return data;
         }
     }
