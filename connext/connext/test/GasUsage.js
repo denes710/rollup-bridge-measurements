@@ -272,58 +272,58 @@ describe("Tests for gas measurements", function () {
         const NON_NULL_BYTES32 = '0x1111111111111111111111111111111111111111111111111111111111111111';
         const NON_NULL_BYTES32_RAW = '1111111111111111111111111111111111111111111111111111111111111111';
 
-        const BridgeFacetFactory = await ethers.getContractFactory("BridgeFacet");
-        const bridgeFacet = await BridgeFacetFactory.connect(owner).deploy();
-
-        const LibAddressManagerFactory = await ethers.getContractFactory("Lib_AddressManager");
-
-        const StateCommitmentChainFactory = await ethers.getContractFactory("HelperStateCommitmentChain");
-        const HelperOptimismAmbFactory = await ethers.getContractFactory("HelperOptimismAmb");
-        const ChainStorageContainerFactory = await ethers.getContractFactory("HelperChainStorageContainer");
-        const OptimismSpokeConnectorFactory = await ethers.getContractFactory("OptimismSpokeConnector");
-
-        const MerkleTreeManagerFactory = await ethers.getContractFactory("MerkleTreeManager");
-        const WatcherManagerFactory = await ethers.getContractFactory("WatcherManager");
-        const RootManagerFactory = await ethers.getContractFactory("RootManager");
-
-        const merkleTreeManager = await MerkleTreeManagerFactory.connect(owner).deploy();
-        const watcherManager = await WatcherManagerFactory.connect(owner).deploy();
-        const rootManager = await RootManagerFactory.connect(owner).deploy(5, merkleTreeManager.address, watcherManager.address);
-        const helperOptimismAmb = await HelperOptimismAmbFactory.connect(owner).deploy();
-
-        const libAddressManager = await LibAddressManagerFactory.connect(owner).deploy();
-        const stateCommitmentChain = await StateCommitmentChainFactory.connect(owner).deploy(libAddressManager.address, 1, 1000000000);
-        const chainStorageContainer = await ChainStorageContainerFactory.connect(owner).deploy(libAddressManager.address, "");
-
-        await libAddressManager.connect(owner).setAddress("StateCommitmentChain", stateCommitmentChain.address); 
-        await libAddressManager.connect(owner).setAddress("ChainStorageContainer-SCC-batches", chainStorageContainer.address); 
-        const optimismSpokeConnector = await OptimismSpokeConnectorFactory.connect(owner).deploy(
-            999,
-            500,
-            helperOptimismAmb.address,
-            rootManager.address,
-            sender.address,
-            850000,
-            15000,
-            0,
-            merkleTreeManager.address,
-            watcherManager.address,
-            1000000000);
-
-        const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
-        const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
-
-        await bridgeFacet.connect(owner).setOwner();
-        await bridgeFacet.connect(owner).setConnectorManager(optimismSpokeConnector.address);
-        await optimismSpokeConnector.connect(owner).addSender(bridgeFacet.address); 
-
-        await bridgeFacet.connect(owner).enrollRemoteRouter(999, NON_NULL_BYTES32);
-
         let current = "";
         for (let i = 1; i < 17; i++) {
-          current += NON_NULL_BYTES32_RAW;
-          let result = await bridgeFacet.connect(owner).estimateGas['xcall(uint32,address,address,address,uint256,uint256,bytes)'](999, remoteUser.address, ZERO_ADDRESS, fake.address, 0, 10000, '0x' + current);
-          console.log("Bytes: " + (i * 32) + " \t Consumed gas: " + result);
+            const BridgeFacetFactory = await ethers.getContractFactory("BridgeFacet");
+            const bridgeFacet = await BridgeFacetFactory.connect(owner).deploy();
+
+            const LibAddressManagerFactory = await ethers.getContractFactory("Lib_AddressManager");
+
+            const StateCommitmentChainFactory = await ethers.getContractFactory("HelperStateCommitmentChain");
+            const HelperOptimismAmbFactory = await ethers.getContractFactory("HelperOptimismAmb");
+            const ChainStorageContainerFactory = await ethers.getContractFactory("HelperChainStorageContainer");
+            const OptimismSpokeConnectorFactory = await ethers.getContractFactory("OptimismSpokeConnector");
+
+            const MerkleTreeManagerFactory = await ethers.getContractFactory("MerkleTreeManager");
+            const WatcherManagerFactory = await ethers.getContractFactory("WatcherManager");
+            const RootManagerFactory = await ethers.getContractFactory("RootManager");
+
+            const merkleTreeManager = await MerkleTreeManagerFactory.connect(owner).deploy();
+            const watcherManager = await WatcherManagerFactory.connect(owner).deploy();
+            const rootManager = await RootManagerFactory.connect(owner).deploy(5, merkleTreeManager.address, watcherManager.address);
+            const helperOptimismAmb = await HelperOptimismAmbFactory.connect(owner).deploy();
+
+            const libAddressManager = await LibAddressManagerFactory.connect(owner).deploy();
+            const stateCommitmentChain = await StateCommitmentChainFactory.connect(owner).deploy(libAddressManager.address, 1, 1000000000);
+            const chainStorageContainer = await ChainStorageContainerFactory.connect(owner).deploy(libAddressManager.address, "");
+
+            await libAddressManager.connect(owner).setAddress("StateCommitmentChain", stateCommitmentChain.address); 
+            await libAddressManager.connect(owner).setAddress("ChainStorageContainer-SCC-batches", chainStorageContainer.address); 
+            const optimismSpokeConnector = await OptimismSpokeConnectorFactory.connect(owner).deploy(
+                999,
+                500,
+                helperOptimismAmb.address,
+                rootManager.address,
+                sender.address,
+                850000,
+                15000,
+                0,
+                merkleTreeManager.address,
+                watcherManager.address,
+                1000000000);
+
+            const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
+            const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
+
+            await bridgeFacet.connect(owner).setOwner();
+            await bridgeFacet.connect(owner).setConnectorManager(optimismSpokeConnector.address);
+            await optimismSpokeConnector.connect(owner).addSender(bridgeFacet.address); 
+
+            await bridgeFacet.connect(owner).enrollRemoteRouter(999, NON_NULL_BYTES32);
+
+            current += NON_NULL_BYTES32_RAW;
+            const result = (await (await bridgeFacet.connect(owner)['xcall(uint32,address,address,address,uint256,uint256,bytes)'](999, remoteUser.address, ZERO_ADDRESS, fake.address, 0, 10000, '0x' + current)).wait()).gasUsed;
+            console.log("Bytes: " + (i * 32) + " \t Consumed gas: " + result);
         }
     });
     it("Bytes prove and processs", async function () {

@@ -1,0 +1,42 @@
+[
+    {
+        "name": "CMCNNFT",
+        "costs": [
+            224782,
+            69131
+        ]
+    },
+    {
+        "name": "CPNFT",
+        "costs": [
+            224782,
+            49585
+        ]
+    },
+    {
+        "name": "NATIVE",
+        "costs": [
+            0       
+        ]
+    },
+    {
+        "name": "WMERKLE",
+        "costs": [
+            116959
+        ]
+    },
+    {
+        "name": "WBIDS",
+        "costs": [
+            82292,
+            154875
+        ]
+    },
+    {
+        "name": "NFTHASI",
+        "costs": [
+            155687,
+            69018
+        ]
+    }
+]

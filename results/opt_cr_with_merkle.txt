@@ -52,7 +52,7 @@ L1 gas estimation for L2 functions
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 >> simpleGatewaySrcSpokeBrdige.addIncomingBlock L1 Fee in Wei: 132120000000000 L1 Fee in GWei: 132120
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
->> simpleGatewayDstSpokeBrdige.claimNFT L1 Fee in Wei: 247560000000000 L1 Fee in GWei: 247560
+>> simpleGatewaySrcSpokeBrdige.claimNFT L1 Fee in Wei: 247560000000000 L1 Fee in GWei: 247560
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 ///////////////////////////////////////////////

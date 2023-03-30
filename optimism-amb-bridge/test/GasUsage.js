@@ -78,7 +78,7 @@ describe("Tests for gas measurements", function () {
 
         const proof = {stateRoot: "0xf96ff434a34b7acd3e8eaae0234f6fe835b43ebed5ec432db405e63aec6bc4f5", stateRootBatchHeader: stateRootBatchHeader, stateRootProof: stateRootProof, stateTrieWitness: stateTrieWitness, storageTrieWitness: storageTrieWitness};
 
-        let resultRelayMessage = await await l1CrossDomainMessenger.estimateGas.relayMessage(target, sender, message, messageNonce, proof);
+        const resultRelayMessage = (await (await l1CrossDomainMessenger.relayMessage(target, sender, message, messageNonce, proof)).wait()).gasUsed;
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         console.log("l1CrossDomainMessenger.relayMessage message Length: " + message.length + " Consumed gas: " + resultRelayMessage);
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -87,12 +87,15 @@ describe("Tests for gas measurements", function () {
         // Measurements
         // *********************
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        console.log("l1CrossDomainMessenger.estimateGas.sendMessage");
+        console.log("l1CrossDomainMessenger.sendMessage");
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         let current = "";
         for (let i = 1; i < 17; i++) {
+          const l1CrossDomainMessenger = await L1CrossDomainMessengerFactory.connect(owner).deploy();
+          await l1CrossDomainMessenger.connect(owner).initialize(libAddressManager.address);
+
           current += NON_NULL_BYTES32_RAW;
-          let result = await l1CrossDomainMessenger.estimateGas.sendMessage(l2CrossDomainMessenger.address, '0x' + current, 100000);
+          const result = (await (await l1CrossDomainMessenger.sendMessage(l2CrossDomainMessenger.address, '0x' + current, 100000)).wait()).gasUsed;
           console.log("Bytes: " + (i * 32) + " Consumed gas: " + result);
         }        
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -107,8 +110,11 @@ describe("Tests for gas measurements", function () {
         current = "";
         for (let i = 1; i < 17; i++) {
           current += NON_NULL_BYTES32_RAW;
-          let result = await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).estimateGas.relayMessage(l2CrossDomainMessenger.address, l1CrossDomainMessenger.address, '0x' + current, 2);
-          let rawTx = await await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).populateTransaction.relayMessage(NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, '0x' + current, NON_ZERO_BYTE_UINT256);
+          const l2CrossDomainMessenger = await L2CrossDomainMessengerFactory.connect(owner).deploy(l1CrossDomainMessengerHelper.address, oVML2ToL1MessagePasser.address);
+
+          const result = (await (await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).relayMessage(l2CrossDomainMessenger.address, l1CrossDomainMessenger.address, '0x' + current, 2)).wait()).gasUsed;
+
+          let rawTx = await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).populateTransaction.relayMessage(NON_ZERO_BYTE_ADDR, NON_ZERO_BYTE_ADDR, '0x' + current, NON_ZERO_BYTE_UINT256);
           let bytes = await getL1EstimatedGasCost(rawTx, l1CrossDomainMessengerHelper);
           let estimatedL1Gas = await optimismGasHelper.getL1Fee(bytes);
           console.log("Bytes: " + (i * 32) + " \t Consumed gas: " + result + " \t L1 fee(Wei): " + estimatedL1Gas + " \t L1 fee(GWei): " + estimatedL1Gas/10**9);
@@ -122,7 +128,9 @@ describe("Tests for gas measurements", function () {
         current = "";
         for (let i = 1; i < 17; i++) {
           current += NON_NULL_BYTES32_RAW;
-          let result = await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).estimateGas.sendMessage(l1CrossDomainMessenger.address, '0x' + current, 1000000);
+          const l2CrossDomainMessenger = await L2CrossDomainMessengerFactory.connect(owner).deploy(l1CrossDomainMessengerHelper.address, oVML2ToL1MessagePasser.address);
+
+          const result = (await (await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).sendMessage(l1CrossDomainMessenger.address, '0x' + current, 1000000)).wait()).gasUsed;
           let rawTx = await await l2CrossDomainMessenger.connect(l1CrossDomainMessengerHelper).populateTransaction.sendMessage(NON_ZERO_BYTE_ADDR, '0x' + current, 1000000);
           let bytes = await getL1EstimatedGasCost(rawTx, l1CrossDomainMessengerHelper);
           let estimatedL1Gas = await optimismGasHelper.getL1Fee(bytes);
@@ -194,7 +202,8 @@ describe("Tests for gas measurements", function () {
         
         const proof = {stateRoot: "0x03dcfb2b7822f72dfd7c3c071ba49b9f98bc07726f1efddb77d5dfab3ea3d164", stateRootBatchHeader: stateRootBatchHeader, stateRootProof: stateRootProof, stateTrieWitness: stateTrieWitness, storageTrieWitness: storageTrieWitness};
 
-        let resultRelayMessage = await l1CrossDomainMessenger.estimateGas.relayMessage(target, sender, message, messageNonce, proof);
+        const resultRelayMessage = (await (await l1CrossDomainMessenger.relayMessage(target, sender, message, messageNonce, proof)).wait()).gasUsed;
+
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         console.log("l1CrossDomainMessenger.relayMessage Length: " + message.length + " Consumed gas: " + resultRelayMessage);
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -261,7 +270,8 @@ describe("Tests for gas measurements", function () {
         await chainStorageContainer.connect(owner).setSavedHash(stateRootBatchHeader);
         
         const proof = {stateRoot: "0x4ef0dcbc219d1f98787632a5c9748ebc2c6a4ff335b35c7e782e46fc5e7a8879", stateRootBatchHeader: stateRootBatchHeader, stateRootProof: stateRootProof, stateTrieWitness: stateTrieWitness, storageTrieWitness: storageTrieWitness};
-        let resultRelayMessage = await l1CrossDomainMessenger.estimateGas.relayMessage(target, sender, message, messageNonce, proof);
+        const resultRelayMessage = (await (await l1CrossDomainMessenger.relayMessage(target, sender, message, messageNonce, proof)).wait()).gasUsed;
+
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         console.log("l1CrossDomainMessenger.relayMessage Length: " + message.length + " Consumed gas: " + resultRelayMessage);
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");

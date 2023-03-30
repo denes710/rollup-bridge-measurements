@@ -76,7 +76,7 @@ solidity: {
     },
   }
 
->> Wrapping cycle of MCNNFT
+>> Wrapping cycle of CMCNNFT
 
 ··············|··················|·············|·············|··············|···············|··············
 |  MCNNFT     ·  crossChain      ·      64486  ·      64498  ·       64492  ·            2  ·          -  │
@@ -86,7 +86,8 @@ solidity: {
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 L1 gas estimation for L2 functions
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>> localMcnNFT.crossChain L1 Fee in Wei: 150360000000000 L1 Fee in GWei: 150360
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>> 
+>> localMcnNFT.crossChain L1 Fee in Wei: 150360000000000 L1 Fee in GWei: 150360
 >> remoteMcnNFT.crossChain L1 Fee in Wei: 150000000000000 L1 Fee in GWei: 150000
 >> localNftBridge.executeMessage L1 Fee in Wei: 165480000000000 L1 Fee in GWei: 165480
 >> remoteNftBridge.executeMessage L1 Fee in Wei: 165480000000000 L1 Fee in GWei: 165480
@@ -99,7 +100,7 @@ crossChain()
 executeMessage()
 
 
->> Wrapping cycle of MCNNFT
+>> Wrapping cycle of CPNFT
 
 ··············|··················|·············|·············|··············|···············|··············
 |  NFTBridge  ·  executeMessage  ·      70585  ·      87947  ·       79266  ·            2  ·          -  │

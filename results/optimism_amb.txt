@@ -13,7 +13,7 @@ NON_NULL_BYTES32_RAW used, non null bytes
 
 <L1, L1->L2>
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-l1CrossDomainMessenger.estimateGas.sendMessage
+l1CrossDomainMessenger.sendMessage
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Bytes: 32 Consumed gas: 154242
 Bytes: 64 Consumed gas: 155656
@@ -37,50 +37,59 @@ Bytes: 512 Consumed gas: 175457
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 l2CrossDomainMessenger.relayMessage
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-Bytes: 32 	 Consumed gas: 59052 	 L1 fee(Wei): 178440000000000 	 L1 fee(GWei): 178440
-Bytes: 64 	 Consumed gas: 59830 	 L1 fee(Wei): 194280000000000 	 L1 fee(GWei): 194280
-Bytes: 96 	 Consumed gas: 60608 	 L1 fee(Wei): 210120000000000 	 L1 fee(GWei): 210120
-Bytes: 128 	 Consumed gas: 61385 	 L1 fee(Wei): 225480000000000 	 L1 fee(GWei): 225480
-Bytes: 160 	 Consumed gas: 62163 	 L1 fee(Wei): 240840000000000 	 L1 fee(GWei): 240840
-Bytes: 192 	 Consumed gas: 62940 	 L1 fee(Wei): 256200000000000 	 L1 fee(GWei): 256200
-Bytes: 224 	 Consumed gas: 63248 	 L1 fee(Wei): 271560000000000 	 L1 fee(GWei): 271560
-Bytes: 256 	 Consumed gas: 64019 	 L1 fee(Wei): 286920000000000 	 L1 fee(GWei): 286920
-Bytes: 288 	 Consumed gas: 64804 	 L1 fee(Wei): 302640000000000 	 L1 fee(GWei): 302640
-Bytes: 320 	 Consumed gas: 65576 	 L1 fee(Wei): 318000000000000 	 L1 fee(GWei): 318000
-Bytes: 352 	 Consumed gas: 66348 	 L1 fee(Wei): 333360000000000 	 L1 fee(GWei): 333360
-Bytes: 384 	 Consumed gas: 67120 	 L1 fee(Wei): 348720000000000 	 L1 fee(GWei): 348720
-Bytes: 416 	 Consumed gas: 67892 	 L1 fee(Wei): 364080000000000 	 L1 fee(GWei): 364080
-Bytes: 448 	 Consumed gas: 68408 	 L1 fee(Wei): 379440000000000 	 L1 fee(GWei): 379440
-Bytes: 480 	 Consumed gas: 69178 	 L1 fee(Wei): 394800000000000 	 L1 fee(GWei): 394800
-Bytes: 512 	 Consumed gas: 69934 	 L1 fee(Wei): 409800000000000 	 L1 fee(GWei): 409800
+Bytes: 32 	 Consumed gas: 55991 	 L1 fee(Wei): 178440000000000 	 L1 fee(GWei): 178440
+Bytes: 64 	 Consumed gas: 56729 	 L1 fee(Wei): 194280000000000 	 L1 fee(GWei): 194280
+Bytes: 96 	 Consumed gas: 57466 	 L1 fee(Wei): 210120000000000 	 L1 fee(GWei): 210120
+Bytes: 128 	 Consumed gas: 58203 	 L1 fee(Wei): 225480000000000 	 L1 fee(GWei): 225480
+Bytes: 160 	 Consumed gas: 58941 	 L1 fee(Wei): 240840000000000 	 L1 fee(GWei): 240840
+Bytes: 192 	 Consumed gas: 59678 	 L1 fee(Wei): 256200000000000 	 L1 fee(GWei): 256200
+Bytes: 224 	 Consumed gas: 60416 	 L1 fee(Wei): 271560000000000 	 L1 fee(GWei): 271560
+Bytes: 256 	 Consumed gas: 61153 	 L1 fee(Wei): 286920000000000 	 L1 fee(GWei): 286920
+Bytes: 288 	 Consumed gas: 61903 	 L1 fee(Wei): 302640000000000 	 L1 fee(GWei): 302640
+Bytes: 320 	 Consumed gas: 62640 	 L1 fee(Wei): 318000000000000 	 L1 fee(GWei): 318000
+Bytes: 352 	 Consumed gas: 63366 	 L1 fee(Wei): 333000000000000 	 L1 fee(GWei): 333000
+Bytes: 384 	 Consumed gas: 64115 	 L1 fee(Wei): 348720000000000 	 L1 fee(GWei): 348720
+Bytes: 416 	 Consumed gas: 64853 	 L1 fee(Wei): 364080000000000 	 L1 fee(GWei): 364080
+Bytes: 448 	 Consumed gas: 65591 	 L1 fee(Wei): 379440000000000 	 L1 fee(GWei): 379440
+Bytes: 480 	 Consumed gas: 66329 	 L1 fee(Wei): 394800000000000 	 L1 fee(GWei): 394800
+Bytes: 512 	 Consumed gas: 67054 	 L1 fee(Wei): 409800000000000 	 L1 fee(GWei): 409800
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 <L2, L2->L1>
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 l2CrossDomainMessenger.sendMessage
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-Bytes: 32 	 Consumed gas: 83768 	 L1 fee(Wei): 156960000000000 	 L1 fee(GWei): 156960
-Bytes: 64 	 Consumed gas: 84844 	 L1 fee(Wei): 172320000000000 	 L1 fee(GWei): 172320
-Bytes: 96 	 Consumed gas: 85919 	 L1 fee(Wei): 188160000000000 	 L1 fee(GWei): 188160
-Bytes: 128 	 Consumed gas: 86995 	 L1 fee(Wei): 204000000000000 	 L1 fee(GWei): 204000
-Bytes: 160 	 Consumed gas: 88070 	 L1 fee(Wei): 219360000000000 	 L1 fee(GWei): 219360
-Bytes: 192 	 Consumed gas: 89145 	 L1 fee(Wei): 234720000000000 	 L1 fee(GWei): 234720
-Bytes: 224 	 Consumed gas: 90222 	 L1 fee(Wei): 250080000000000 	 L1 fee(GWei): 250080
-Bytes: 256 	 Consumed gas: 91297 	 L1 fee(Wei): 265440000000000 	 L1 fee(GWei): 265440
-Bytes: 288 	 Consumed gas: 92385 	 L1 fee(Wei): 281160000000000 	 L1 fee(GWei): 281160
-Bytes: 320 	 Consumed gas: 93460 	 L1 fee(Wei): 296520000000000 	 L1 fee(GWei): 296520
-Bytes: 352 	 Consumed gas: 94537 	 L1 fee(Wei): 311880000000000 	 L1 fee(GWei): 311880
-Bytes: 384 	 Consumed gas: 95613 	 L1 fee(Wei): 327240000000000 	 L1 fee(GWei): 327240
-Bytes: 416 	 Consumed gas: 96688 	 L1 fee(Wei): 342600000000000 	 L1 fee(GWei): 342600
-Bytes: 448 	 Consumed gas: 97765 	 L1 fee(Wei): 357960000000000 	 L1 fee(GWei): 357960
-Bytes: 480 	 Consumed gas: 98841 	 L1 fee(Wei): 373320000000000 	 L1 fee(GWei): 373320
-Bytes: 512 	 Consumed gas: 99906 	 L1 fee(Wei): 388320000000000 	 L1 fee(GWei): 388320
+Bytes: 32 	 Consumed gas: 100868 	 L1 fee(Wei): 156960000000000 	 L1 fee(GWei): 156960
+Bytes: 64 	 Consumed gas: 101944 	 L1 fee(Wei): 172320000000000 	 L1 fee(GWei): 172320
+Bytes: 96 	 Consumed gas: 103019 	 L1 fee(Wei): 188160000000000 	 L1 fee(GWei): 188160
+Bytes: 128 	 Consumed gas: 104095 	 L1 fee(Wei): 204000000000000 	 L1 fee(GWei): 204000
+Bytes: 160 	 Consumed gas: 105170 	 L1 fee(Wei): 219360000000000 	 L1 fee(GWei): 219360
+Bytes: 192 	 Consumed gas: 106245 	 L1 fee(Wei): 234720000000000 	 L1 fee(GWei): 234720
+Bytes: 224 	 Consumed gas: 107322 	 L1 fee(Wei): 250080000000000 	 L1 fee(GWei): 250080
+Bytes: 256 	 Consumed gas: 108397 	 L1 fee(Wei): 265080000000000 	 L1 fee(GWei): 265080
+Bytes: 288 	 Consumed gas: 109485 	 L1 fee(Wei): 280800000000000 	 L1 fee(GWei): 280800
+Bytes: 320 	 Consumed gas: 110560 	 L1 fee(Wei): 296520000000000 	 L1 fee(GWei): 296520
+Bytes: 352 	 Consumed gas: 111637 	 L1 fee(Wei): 311880000000000 	 L1 fee(GWei): 311880
+Bytes: 384 	 Consumed gas: 112713 	 L1 fee(Wei): 327240000000000 	 L1 fee(GWei): 327240
+Bytes: 416 	 Consumed gas: 113788 	 L1 fee(Wei): 342600000000000 	 L1 fee(GWei): 342600
+Bytes: 448 	 Consumed gas: 114865 	 L1 fee(Wei): 357960000000000 	 L1 fee(GWei): 357960
+Bytes: 480 	 Consumed gas: 115941 	 L1 fee(Wei): 373320000000000 	 L1 fee(GWei): 373320
+Bytes: 512 	 Consumed gas: 117006 	 L1 fee(Wei): 388320000000000 	 L1 fee(GWei): 388320
+
 
 <L1, L2->L1>
+
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-l1CrossDomainMessenger.relayMessage Length: 330 Consumed gas: 790503
+l1CrossDomainMessenger.relayMessage Length: 330 Consumed gas: 782102
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-l1CrossDomainMessenger.relayMessage message Length: 458 Consumed gas: 822725
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-l1CrossDomainMessenger.relayMessage message Length: 522 Consumed gas: 853949
+l1CrossDomainMessenger.relayMessage message Length: 458 Consumed gas: 814769
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+l1CrossDomainMessenger.relayMessage Length: 522 Consumed gas: 845692
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+[330, 458, 522]
+[782102, 814769, 845692]

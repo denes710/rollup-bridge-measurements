@@ -44,8 +44,6 @@ function finalizeBridgeERC721(
 *         can be refunded on L2.
 function bridgeERC721To(
 
-
-
         bytes memory message = abi.encodeWithSelector(
             L2ERC721Bridge.finalizeBridgeERC721.selector, // 4
             _remoteToken, // 32

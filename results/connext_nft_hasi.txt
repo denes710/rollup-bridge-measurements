@@ -81,7 +81,7 @@ L1 gas estimation for L2 functions
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-Prove and process on L2
+proveAndProcess on L2
 Proofs: 1 	 Consumed gas: 155687 	 	  	 L1 fee(GWei): 1173240
 Proofs: 2 	 Consumed gas: 189767 	 	  	 L1 fee(GWei): 1721400
 Proofs: 4 	 Consumed gas: 257974 	 	  	 L1 fee(GWei): 2817720
@@ -92,22 +92,22 @@ Proofs: 64 	 Consumed gas: 2334138 	 	  	 L1 fee(GWei): 35710080
 Proofs: 128 	 Consumed gas: 4613084 	 	  	 L1 fee(GWei): 70813200
 
 // xcall on L2
-Bytes: 32 	 Consumed gas: 259140
-Bytes: 64 	 Consumed gas: 259570
-Bytes: 96 	 Consumed gas: 260499
-Bytes: 128 	 Consumed gas: 261429
-Bytes: 160 	 Consumed gas: 262359
-Bytes: 192 	 Consumed gas: 263290
-Bytes: 224 	 Consumed gas: 264221
-Bytes: 256 	 Consumed gas: 265150
-Bytes: 288 	 Consumed gas: 266092
-Bytes: 320 	 Consumed gas: 267023
-Bytes: 352 	 Consumed gas: 267954
-Bytes: 384 	 Consumed gas: 268885
-Bytes: 416 	 Consumed gas: 269815
-Bytes: 448 	 Consumed gas: 270745
-Bytes: 480 	 Consumed gas: 271675
-Bytes: 512 	 Consumed gas: 272595
+Bytes: 32 	 Consumed gas: 256139
+Bytes: 64 	 Consumed gas: 257060
+Bytes: 96 	 Consumed gas: 257981
+Bytes: 128 	 Consumed gas: 258902
+Bytes: 160 	 Consumed gas: 259823
+Bytes: 192 	 Consumed gas: 260744
+Bytes: 224 	 Consumed gas: 261666
+Bytes: 256 	 Consumed gas: 262587
+Bytes: 288 	 Consumed gas: 263520
+Bytes: 320 	 Consumed gas: 264442
+Bytes: 352 	 Consumed gas: 265363
+Bytes: 384 	 Consumed gas: 266285
+Bytes: 416 	 Consumed gas: 267206
+Bytes: 448 	 Consumed gas: 268128
+Bytes: 480 	 Consumed gas: 269049
+Bytes: 512 	 Consumed gas: 269959
 
 
 ///////////

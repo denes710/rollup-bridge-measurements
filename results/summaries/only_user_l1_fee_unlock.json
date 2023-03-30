@@ -1,0 +1,44 @@
+[
+    {
+        "name": "CMCNNFT",
+        "l2_fee_costs": [
+            150000
+        ]
+    },
+    {
+        "name": "CPNFT",
+        "l2_fee_costs": [
+            161400
+        ]
+    },
+    {
+        "name": "NATIVE",
+        "l2_fee_costs": [
+            179520
+        ],
+        "gas_costs": [
+            123315,
+            141726
+        ]
+    },
+    {
+        "name": "WMERKLE",
+        "l2_fee_costs": [
+            258960,
+            247560
+        ]
+    },
+    {
+        "name": "WBIDS",
+        "l2_fee_costs": [
+            203280,
+            192120
+        ]
+    },
+    {
+        "name": "NFTHASI",
+        "l2_fee_costs": [
+            195360
+        ]
+    }
+]
