@@ -82,13 +82,14 @@ L1 gas estimation for L2 functions
 
 
 Prove and process on L2
-Proofs: 1 	 Consumed gas: 1020843 	 	  	 L1 fee(GWei): 1173240
-Proofs: 2 	 Consumed gas: 1055007 	 	  	 L1 fee(GWei): 1721400
-Proofs: 4 	 Consumed gas: 1124802 	 	  	 L1 fee(GWei): 2817720
-Proofs: 8 	 Consumed gas: 1256206 	 	  	 L1 fee(GWei): 5010360
-Proofs: 16 	 Consumed gas: 1527484 	 	  	 L1 fee(GWei): 9395280
-Proofs: 32 	 Consumed gas: 2068550 	 	  	 L1 fee(GWei): 18165120
-Proofs: 64 	 Consumed gas: 3174204 	 	  	 L1 fee(GWei): 35710080
+Proofs: 1 	 Consumed gas: 155687 	 	  	 L1 fee(GWei): 1173240
+Proofs: 2 	 Consumed gas: 189767 	 	  	 L1 fee(GWei): 1721400
+Proofs: 4 	 Consumed gas: 257974 	 	  	 L1 fee(GWei): 2817720
+Proofs: 8 	 Consumed gas: 394580 	 	  	 L1 fee(GWei): 5010360
+Proofs: 16 	 Consumed gas: 668555 	 	  	 L1 fee(GWei): 9395280
+Proofs: 32 	 Consumed gas: 1219589 	 	  	 L1 fee(GWei): 18165120
+Proofs: 64 	 Consumed gas: 2334138 	 	  	 L1 fee(GWei): 35710080
+Proofs: 128 	 Consumed gas: 4613084 	 	  	 L1 fee(GWei): 70813200
 
 // xcall on L2
 Bytes: 32 	 Consumed gas: 259140

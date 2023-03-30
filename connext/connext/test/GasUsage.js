@@ -342,45 +342,6 @@ describe("Tests for gas measurements", function () {
         const WatcherManagerFactory = await ethers.getContractFactory("WatcherManager");
         const RootManagerFactory = await ethers.getContractFactory("RootManager");
 
-        const merkleTreeManager = await MerkleTreeManagerFactory.connect(owner).deploy();
-        const watcherManager = await WatcherManagerFactory.connect(owner).deploy();
-        const rootManager = await RootManagerFactory.connect(owner).deploy(5, merkleTreeManager.address, watcherManager.address);
-        const helperOptimismAmb = await HelperOptimismAmbFactory.connect(owner).deploy();
-
-        const libAddressManager = await LibAddressManagerFactory.connect(owner).deploy();
-        const stateCommitmentChain = await StateCommitmentChainFactory.connect(owner).deploy(libAddressManager.address, 1, 1000000000);
-        const chainStorageContainer = await ChainStorageContainerFactory.connect(owner).deploy(libAddressManager.address, "");
-
-        await libAddressManager.connect(owner).setAddress("StateCommitmentChain", stateCommitmentChain.address); 
-        await libAddressManager.connect(owner).setAddress("ChainStorageContainer-SCC-batches", chainStorageContainer.address); 
-
-        // local domain 500 ~ HUB
-        const optimismHubConnector = await OptimismHubConnectorFactory.connect(owner).deploy(
-            500,
-            999,
-            helperOptimismAmb.address,
-            rootManager.address,
-            sender.address,
-            stateCommitmentChain.address,
-            1000000000);
-        // remote domain 999 ~ SPOKE
-        const optimismSpokeConnector = await OptimismSpokeConnectorFactory.connect(owner).deploy(
-            999,
-            500,
-            helperOptimismAmb.address,
-            rootManager.address,
-            sender.address,
-            850000,
-            15000,
-            0,
-            merkleTreeManager.address,
-            watcherManager.address,
-            1000000000);
-
-        await merkleTreeManager.connect(owner).initialize(optimismSpokeConnector.address);
-        await optimismSpokeConnector.connect(owner).addSender(owner.address);
-        await rootManager.connect(owner).addConnector(999, optimismHubConnector.address);
-
         const root = "0x27ae5ba08d7291c96c8cbddcc148bf48a6d68c7974b94356f53754ef6171d757";
 
         const message = "0x4ff746f60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002027ae5ba08d7291c96c8cbddcc148bf48a6d68c7974b94356f53754ef6171d757";
@@ -455,46 +416,88 @@ describe("Tests for gas measurements", function () {
 
         const messageProof = zeroHashes;
         const aggregateProof = zeroHashes;
-        const formatMessage = await helperOptimismAmb.connect(owner).formatMessage(500, NON_NULL_BYTES32, 222, 999, NON_NULL_BYTES32, NON_NULL_BYTES32);
-
-        const messageRoot = await helperOptimismAmb.connect(owner).calculateMessageRoot(formatMessage, messageProof, 0);
-        const aggregatedRoot = await helperOptimismAmb.connect(owner).calculateRoot(messageRoot, aggregateProof, 0);
-
-        const proofs = [{message: formatMessage, path: messageProof, index: 0}];
-
-        // send a message from L2 to L1
-        // on L2
-        await optimismSpokeConnector.connect(owner).dispatch(999, NON_NULL_BYTES32, NON_NULL_BYTES32);
-
-        // on L1
-        await chainStorageContainer.connect(owner).setSavedHash(stateRootBatchHeader);
-        await optimismHubConnector.connect(owner).processMessageFromRoot(optimismHubConnector.address, sender.address, message, messageNonce, proof);
-
-        // L1 to L2
-        // on L1
-        await rootManager.connect(owner).propagate([optimismHubConnector.address], [100000], [NON_NULL_BYTES32], { value: ethers.utils.parseEther("0.5") });
-        // const messageLen = await helperOptimismAmb.lastMessageLen();
-        // console.log("Send message from L1 to L2 len: " + messageLen);
-
-        // process message
-        const helperOptimismAmbSigner = await ethers.getImpersonatedSigner(helperOptimismAmb.address);
-        await setBalance(helperOptimismAmb.address, 100n ** 18n);
-        await helperOptimismAmb.setSender(sender.address);
- 
-        // on l2
-        await optimismSpokeConnector.connect(helperOptimismAmbSigner).processMessage(aggregatedRoot);
-
 
         const OptimismGasHelperFactory = await ethers.getContractFactory("OptimismGasHelper");
         const optimismGasHelper = await OptimismGasHelperFactory.connect(owner).deploy(30_000_000_000);
 
         for (let i = 1; i < 2**16; i = i * 2) {
+            const merkleTreeManager = await MerkleTreeManagerFactory.connect(owner).deploy();
+            const watcherManager = await WatcherManagerFactory.connect(owner).deploy();
+            const rootManager = await RootManagerFactory.connect(owner).deploy(5, merkleTreeManager.address, watcherManager.address);
+            const helperOptimismAmb = await HelperOptimismAmbFactory.connect(owner).deploy();
+
+            const libAddressManager = await LibAddressManagerFactory.connect(owner).deploy();
+            const stateCommitmentChain = await StateCommitmentChainFactory.connect(owner).deploy(libAddressManager.address, 1, 1000000000);
+            const chainStorageContainer = await ChainStorageContainerFactory.connect(owner).deploy(libAddressManager.address, "");
+
+            await libAddressManager.connect(owner).setAddress("StateCommitmentChain", stateCommitmentChain.address);
+            await libAddressManager.connect(owner).setAddress("ChainStorageContainer-SCC-batches", chainStorageContainer.address);
+
+            // local domain 500 ~ HUB
+            const optimismHubConnector = await OptimismHubConnectorFactory.connect(owner).deploy(
+                500,
+                999,
+                helperOptimismAmb.address,
+                rootManager.address,
+                sender.address,
+                stateCommitmentChain.address,
+                1000000000);
+            // remote domain 999 ~ SPOKE
+            const optimismSpokeConnector = await OptimismSpokeConnectorFactory.connect(owner).deploy(
+                999,
+                500,
+                helperOptimismAmb.address,
+                rootManager.address,
+                sender.address,
+                850000,
+                15000,
+                0,
+                merkleTreeManager.address,
+                watcherManager.address,
+                1000000000);
+
+            await merkleTreeManager.connect(owner).initialize(optimismSpokeConnector.address);
+            await optimismSpokeConnector.connect(owner).addSender(owner.address);
+            await rootManager.connect(owner).addConnector(999, optimismHubConnector.address);
+
+
+            const formatMessage = await helperOptimismAmb.connect(owner).formatMessage(500, NON_NULL_BYTES32, 222, 999, NON_NULL_BYTES32, NON_NULL_BYTES32);
+
+            const messageRoot = await helperOptimismAmb.connect(owner).calculateMessageRoot(formatMessage, messageProof, 0);
+            const aggregatedRoot = await helperOptimismAmb.connect(owner).calculateRoot(messageRoot, aggregateProof, 0);
+
+
+            // send a message from L2 to L1
+            // on L2
+            await optimismSpokeConnector.connect(owner).dispatch(999, NON_NULL_BYTES32, NON_NULL_BYTES32);
+
+            // on L1
+            await chainStorageContainer.connect(owner).setSavedHash(stateRootBatchHeader);
+            await optimismHubConnector.connect(owner).processMessageFromRoot(optimismHubConnector.address, sender.address, message, messageNonce, proof);
+
+            // L1 to L2
+            // on L1
+            await rootManager.connect(owner).propagate([optimismHubConnector.address], [100000], [NON_NULL_BYTES32], { value: ethers.utils.parseEther("0.5") });
+            // const messageLen = await helperOptimismAmb.lastMessageLen();
+            // console.log("Send message from L1 to L2 len: " + messageLen);
+
+            // process message
+            const helperOptimismAmbSigner = await ethers.getImpersonatedSigner(helperOptimismAmb.address);
+            await setBalance(helperOptimismAmb.address, 100n ** 18n);
+            await helperOptimismAmb.setSender(sender.address);
+
+            // on l2
+            await optimismSpokeConnector.connect(helperOptimismAmbSigner).processMessage(aggregatedRoot);
+
             let proofs = [];
             for (let j = 0; j < i; j++) {
                 proofs = proofs.concat([{message: formatMessage, path: messageProof, index: 0}])
             }
 
-            let result = await optimismSpokeConnector.connect(owner).estimateGas.proveAndProcess(proofs, aggregatedRoot, aggregateProof, 0);
+            const trans = await optimismSpokeConnector.connect(owner).proveAndProcess(proofs, aggregatedRoot, aggregateProof, 0);
+            const receipt = await trans.wait()
+            const result = receipt.gasUsed
+
             let rawTx = await optimismSpokeConnector.connect(owner).populateTransaction.proveAndProcess(proofs, aggregatedRoot, aggregateProof, 0);
             let bytes = await getL1EstimatedGasCost(rawTx, owner);
             let estimatedL1Gas = await optimismGasHelper.getL1Fee(bytes);
