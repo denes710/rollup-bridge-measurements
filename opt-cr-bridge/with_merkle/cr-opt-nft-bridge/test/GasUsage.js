@@ -183,10 +183,10 @@ describe("Tests for gas measurements", function () {
         await simpleGatewayDstSpokeBrdige.connect(relayer).addIncomingBlock(transactionRoot)
 
         await simpleGatewayHub.connect(owner).addSpokeBridge(simpleGatewaySrcSpokeBrdige.address, simpleGatewayDstSpokeBrdige.address);
-        // we dealing with in other cases
-        // await simpleGatewayDstSpokeBrdige.connect(wathcer).challengeIncomingBlock(1, {value: ethers.utils.parseEther("10.0")});
-        // await simpleGatewaySrcSpokeBrdige.connect(wathcer).sendProof(1);
-        // await simpleGatewayDstSpokeBrdige.connect(owner).restore();
+
+        await simpleGatewayDstSpokeBrdige.connect(wathcer).challengeIncomingBlock(1, {value: ethers.utils.parseEther("10.0")});
+        await simpleGatewaySrcSpokeBrdige.connect(wathcer).sendProof(1);
+        await simpleGatewayDstSpokeBrdige.connect(owner).restore();
 
         await simpleGatewayDstSpokeBrdige.connect(remoteUser).deposite({value: ethers.utils.parseEther("20.0")});
 
