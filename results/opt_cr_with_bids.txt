@@ -66,7 +66,6 @@ similar cost
 |  SimpleGatewaySrcSpokeBrdige  ·  receiveProof          ·          -  ·          -  ·      107969  ·            1  ·          -  │
 ································|························|··············|·············|·············|···············|··············
 
-
 challenging an outgoing bid
 224 byte
             OutgoingBid memory bid = outgoingBids[_bidId];
@@ -94,8 +93,10 @@ challenging an incoming bid
 
             // 2*32 + 32
             data = abi.encode(data, false);
-
+// selector stuff
 + 2*32 + 4 byte
+
+= 11*32
 
 // Wrapping cycle
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
