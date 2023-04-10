@@ -13,14 +13,14 @@
     },
     {
         "name": "WMERKLE",
-        "time_in_second": 24
+        "time_in_second": 4
     },
     {
         "name": "WBIDS",
-        "time_in_second": 24
+        "time_in_second": 4
     },
     {
-        "name": "NFTHASI",
+        "name": "NFTHASHI",
         "time_in_second": 2100
     }
 ]

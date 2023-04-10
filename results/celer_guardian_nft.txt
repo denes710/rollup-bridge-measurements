@@ -1,4 +1,4 @@
->> Celler-guardian
+>> Celer-guardian
 - only communicate on L2
 - generating benchmark report files: yarn report-gas:benchmark
 
